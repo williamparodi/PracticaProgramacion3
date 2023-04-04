@@ -38,4 +38,6 @@ for($i=0;$i < count($arrayIndexado);$i++)
     echo "<br/>";
 }
 
+//podría utilizar array_push() para agregar al array.
+//imprimir var_dump para saber que tiene el array
 ?>
