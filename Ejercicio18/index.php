@@ -96,7 +96,10 @@ class Garage
             {
                 if($this->Equals($auto))
                 {
+                    //Esto borra pero no reacomoda el array
                     unset($this->_autos[$key]);
+                    //Este lo borra y reacomoda el array se le pasa el array, el indice y la cantidad.
+                    //array_splice($this->_autos,$key,1);
                     echo "Se quito el auto del garage <br/>";
                     break;
                 }
