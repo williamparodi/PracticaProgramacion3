@@ -1,0 +1,81 @@
+[
+    {
+        "id": 757,
+        "nombre": "Belatriz",
+        "mail": "bela@yahoo.com.ar",
+        "clave": "1324bela",
+        "fechaRegistro": "23-04-23"
+    },
+    [
+        {
+            "id": 72,
+            "nombre": "Voldemort",
+            "mail": "voldi20@gmail.com",
+            "clave": "1234muerePotter",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 294,
+            "nombre": "Pepe",
+            "mail": "pepe@gmail.com",
+            "clave": "pepe12341",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 163,
+            "nombre": "Belatriz",
+            "mail": "bela@yahoo.com.ar",
+            "clave": "1324bela",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 246,
+            "nombre": "Voldemort",
+            "mail": "voldi20@gmail.com",
+            "clave": "1234muerePotter",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 364,
+            "nombre": "Pepe",
+            "mail": "pepe@gmail.com",
+            "clave": "pepe12341",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 917,
+            "nombre": "Belatriz",
+            "mail": "bela@yahoo.com.ar",
+            "clave": "1324bela",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 290,
+            "nombre": "Voldemort",
+            "mail": "voldi20@gmail.com",
+            "clave": "1234muerePotter",
+            "fechaRegistro": "23-04-23"
+        }
+    ],
+    [
+        {
+            "id": 435,
+            "nombre": "Pepe",
+            "mail": "pepe@gmail.com",
+            "clave": "pepe12341",
+            "fechaRegistro": "23-04-23"
+        }
+    ]
+]
