@@ -1,0 +1,18 @@
+[
+    {
+        "_id": 37,
+        "_codigoBarras": "101000",
+        "_nombre": "mayo",
+        "_tipo": "solido",
+        "_stock": 15,
+        "_precio": "100.00"
+    },
+    {
+        "_id": 7747,
+        "_codigoBarras": "563000",
+        "_nombre": "Ketchup",
+        "_tipo": "semi solido",
+        "_stock": "10",
+        "_precio": "56565"
+    }
+]
