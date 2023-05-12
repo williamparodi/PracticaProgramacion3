@@ -1,0 +1,13 @@
+[
+    {
+        "_numeroPedido": 344,
+        "_mailUsuario": "pepito@gmail.com",
+        "_fecha": {
+            "date": "2023-05-12 22:00:21.339802",
+            "timezone_type": 3,
+            "timezone": "Europe\/Berlin"
+        },
+        "_idVenta": null,
+        "_id": 0
+    }
+]

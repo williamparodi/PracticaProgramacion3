@@ -1,26 +1,20 @@
 [
     {
         "_codigoBarrasProducto": "101000",
-        "_id": 8872,
+        "_id": 9677,
         "_cantidadItems": "2",
         "_idUsuario": "556"
     },
     {
         "_codigoBarrasProducto": "101000",
-        "_id": 1578,
+        "_id": 6419,
         "_cantidadItems": "2",
         "_idUsuario": "556"
     },
     {
-        "_codigoBarrasProducto": "101000",
-        "_id": 2462,
+        "_codigoBarrasProducto": "563000",
+        "_id": 2263,
         "_cantidadItems": "2",
-        "_idUsuario": "556"
-    },
-    {
-        "_codigoBarrasProducto": "101000",
-        "_id": 660,
-        "_cantidadItems": "2",
-        "_idUsuario": "556"
+        "_idUsuario": "90"
     }
 ]

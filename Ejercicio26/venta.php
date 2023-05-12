@@ -86,15 +86,17 @@ class Venta
         return $retorno;
     }
 
-    public static function VerificaProducto($listaProductos,$codigoBarrasProducto)
+    public static function VerificaProducto($listaProductos,$codigoBarrasProducto,$cantidadItems)
     {
         $retorno = false;
         if($listaProductos != NULL)
         {
             foreach($listaProductos as $producto)
             {
-                if($producto->GetCodigo() == $codigoBarrasProducto && $producto->GetStock()> 0)
+                if($producto->GetCodigo() == $codigoBarrasProducto && $producto->GetStock()> 0 
+                    && $cantidadItems <= $producto->GetStock())
                 {
+                    $producto->SetStock($producto->GetStock() - $cantidadItems);
                     $retorno = true;
                     break;
                 }
@@ -154,11 +156,11 @@ class Venta
         $arrayUsuarios = Usuario::LeeJson();
         $arrayVentas = Venta::LeeJson(); 
 
-        if(Venta::VerificaProducto($arrayProductos,$venta->GetCodigo()) && 
+        if(Venta::VerificaProducto($arrayProductos,$venta->GetCodigo(),$venta->GetCantidad()) && 
            Venta::VerificaUsuario($arrayUsuarios,$venta->GetIdUsuario()))
         {
             array_push($arrayVentas,$venta);
-            if(Venta::GuardaJson($arrayVentas))
+            if(Venta::GuardaJson($arrayVentas)&& Producto::GuardarJson($arrayProductos))
             {
                 echo "Venta realizada";
             }

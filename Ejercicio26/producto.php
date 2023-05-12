@@ -1,6 +1,5 @@
 <?php
 
-
 class Producto
 {
     private $_id;
@@ -178,7 +177,6 @@ class Producto
 
             if(Producto::GuardarJson($array))
             {
-                
                 echo "Ingresado";
             }
             else

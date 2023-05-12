@@ -1,7 +1,5 @@
 <?php
 
-use Usuario as GlobalUsuario;
-
 class Usuario
 {
     private $_id;
