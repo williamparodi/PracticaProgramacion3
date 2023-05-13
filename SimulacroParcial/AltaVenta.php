@@ -12,12 +12,13 @@ class AltaVenta
     {
         $arrayPizza = Pizza::LeeJson();
         $arrayVenta = Venta::LeeJson();
-        $pizza = new Pizza($venta->GetSabor(),NULL,$venta->GetTipo(),$venta->GetCantidad());
+        $pizza = new Pizza($venta->GetSabor(),0,$venta->GetTipo(),$venta->GetCantidad());
         if (Pizza::RestaCantidadPizza($arrayPizza, $pizza)) 
         {
             array_push($arrayVenta,$venta);
             if (Pizza::GuardarJson($arrayPizza) && Venta::GuardaJson($arrayVenta))
             {
+                Venta::GuardaImagenPizza($venta);
                 echo "Venta Realizada";
             }
             else 

@@ -23,7 +23,7 @@ switch($listaPostMan)
         PizzaCarga::AltaPizza($pizzaPost);
     break;
     case "AltaVenta":
-        $mailUsuario = $_POST["_mail"];
+        $mailUsuario = $_POST["_mailUsuario"];
         $sabor = $_POST["_sabor"];
         $tipo = $_POST["_tipo"];
         $cantidad = $_POST["_cantidad"];

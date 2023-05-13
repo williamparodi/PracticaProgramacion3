@@ -1,13 +1,38 @@
 [
     {
-        "_numeroPedido": 344,
+        "_id": 1,
+        "_numeroPedido": 3435,
+        "_sabor": "anchoas",
+        "_tipo": "piedra",
+        "_cantidad": "2",
         "_mailUsuario": "pepito@gmail.com",
-        "_fecha": {
-            "date": "2023-05-12 22:00:21.339802",
-            "timezone_type": 3,
-            "timezone": "Europe\/Berlin"
-        },
-        "_idVenta": null,
-        "_id": 0
+        "_fecha": "05.13.23"
+    },
+    {
+        "_id": 1,
+        "_numeroPedido": 9488,
+        "_sabor": "anchoas",
+        "_tipo": "piedra",
+        "_cantidad": "2",
+        "_mailUsuario": "pepito@gmail.com",
+        "_fecha": "05.13.23"
+    },
+    {
+        "_id": 1,
+        "_numeroPedido": 1610,
+        "_sabor": "anchoas",
+        "_tipo": "piedra",
+        "_cantidad": "2",
+        "_mailUsuario": "pepito@gmail.com",
+        "_fecha": "05.13.23"
+    },
+    {
+        "_id": 1,
+        "_numeroPedido": 621,
+        "_sabor": "anchoas",
+        "_tipo": "piedra",
+        "_cantidad": "2",
+        "_mailUsuario": "pepito@gmail.com",
+        "_fecha": "05.13.23"
     }
 ]

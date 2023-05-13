@@ -1,6 +1,7 @@
 <?php
 class Pizza
 {
+    private static $_idIncremental = 1;
     private $_sabor;
     private $_precio;
     private $_tipo;
@@ -15,12 +16,13 @@ class Pizza
             $this->_sabor =$sabor;
             $this->_precio = $precio;
             $this->_cantidad = $cantidad;
-            $this->_id = rand(1,1000);
+            $this->_id = self::$_idIncremental;
         }
         else
         {
             $this->_tipo = "Sin tipo";
         }
+        self::$_idIncremental++;  
     }
 
     public function GetSabor()
@@ -53,7 +55,6 @@ class Pizza
         $this->_tipo=$tipo;
     }
 
-    
     public function SetId($id)
     {
         $this->_id = $id;
@@ -93,7 +94,7 @@ class Pizza
                 $pizza["_cantidad"]);
                 $pizzaAgregar->SetId($pizza["_id"]);
                 array_push($arrayPizza,$pizzaAgregar);
-            }   
+            }
         }
      
         return $arrayPizza;
