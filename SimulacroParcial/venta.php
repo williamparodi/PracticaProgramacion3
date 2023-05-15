@@ -142,11 +142,12 @@ class Venta extends Pizza
     public static function GuardaImagenPizza($venta)
     {
         $cortaString = strpos($venta->GetMailUsuario(),"@");
-        $datosImagen = $venta->GetSabor()."_".$venta->GetTipo()."_".
+        $numeroPedido = $venta->GetNumeroPedido();
+        $datosImagen = $numeroPedido."_".$venta->GetSabor()."_".$venta->GetTipo()."_".
                         substr($venta->GetMailUsuario(),0,$cortaString)."_".
                         $venta->GetFecha().".jpg";
-        $ruta ="ImagenesDeLaVenta/".$_FILES["archivo"]["name"];
-        $nombreCompleto = $ruta.$datosImagen;
+        $ruta = "ImagenesDeLaVenta/".$datosImagen;
+        $nombreCompleto = $ruta;
         move_uploaded_file($_FILES["archivo"]["tmp_name"],$nombreCompleto);
         return $datosImagen;
     }
@@ -171,18 +172,13 @@ class Venta extends Pizza
         return $lista;
     }
 
-    public static function ComparaFechas($fecha1,$fecha2)
-    {
-       return strcmp($fecha1,$fecha2);
-    }
-
     public static function ListaVentasEntreFechas($fecha1,$fecha2)
     {
         $arrayVentas = self::LeeJson();
         $listaEntreFechas = array();
         foreach($arrayVentas as $venta)
         {
-            if(self::ComparaFechas($venta->GetFecha(),$fecha1) >=0 && self::ComparaFechas($venta->GetFecha(),$fecha2) <= 0)
+            if(strcmp($venta->GetFecha(),$fecha1) >=0 && strcmp($venta->GetFecha(),$fecha2) <= 0)
             {
                 array_push($listaEntreFechas,$venta);
             }
@@ -207,7 +203,7 @@ class Venta extends Pizza
         $lista .= "</ul>\n";
         return $lista;       
     }
-
+    
     public static function ListaPorUsuario($mail)
     {
         $arrayVentas = self::LeeJson();
@@ -278,6 +274,7 @@ class Venta extends Pizza
                             $venta->SetMailUsuario($mailUsuario);
                             $flag = true;
                         }
+                        break;
                     }
                 }
                 if($flag)
@@ -295,6 +292,29 @@ class Venta extends Pizza
         {
             echo "Debe ser un numero valido el pedido".$e->getMessage();
         }
+    }
+
+    public static function BorraImagenPorNumero($venta)
+    {
+        $retorno = false;
+        $rutaImagenes = "ImagenesDeLaVenta/";
+        $rutaBackup = "BACKUPVENTAS/";
+        $numeroPedido = $venta->GetNumeroPedido();
+        $archivos = glob($rutaImagenes."*.jpg");//obtiene los archivos jpg
+        foreach($archivos as $value)
+        {
+            $nombreImagen = basename($value);
+            $numeroImagen = explode("_",$nombreImagen);//me saca el id antes del guion
+            $numero = $numeroImagen[0];
+            if($numeroPedido == $numero)
+            {
+                $rutaBackup = $rutaBackup.$nombreImagen;
+                rename($value,$rutaBackup);//cambia la direccion vieja por la nueva
+                unlink($value);
+                $retorno = true;
+            }
+        }
+        return $retorno;
     }
 }   
 

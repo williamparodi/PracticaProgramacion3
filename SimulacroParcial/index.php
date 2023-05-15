@@ -5,6 +5,7 @@ include_once "PizzaConsultar.php";
 include_once "AltaVenta.php";
 include_once "ConsultasVentas.php";
 include_once "ModificarVenta.php";
+include_once "BorrarVenta.php";
 
 $listaPostMan = $_GET["_lista"];
 
@@ -41,6 +42,9 @@ switch($listaPostMan)
         break;
     case "ModificarVenta":
         ModificarVenta::ModificarPorPut();
+        break;
+    case "BorrarVenta":
+        BorrarVenta::BorrarVenta();
         break;
     default:
         echo "No existe esa lista";

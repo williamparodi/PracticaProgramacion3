@@ -198,18 +198,5 @@ class Pizza
         return $datosImagen;
     }
 
-    /*
-    public static function GuardaImagenPizza($venta)
-    {
-        $cortaString = strpos($venta->GetMailUsuario(),"@");
-        $datosImagen = $venta->GetSabor()."_".$venta->GetTipo()."_".
-                        substr($venta->GetMailUsuario(),0,$cortaString)."_".
-                        $venta->GetFecha().".jpg";
-        $ruta ="ImagenesDeLaVenta/".$_FILES["archivo"]["name"];
-        $nombreCompleto = $ruta.$datosImagen;
-        move_uploaded_file($_FILES["archivo"]["tmp_name"],$nombreCompleto);
-        return $datosImagen;
-    }*/
-
 }
 ?>
