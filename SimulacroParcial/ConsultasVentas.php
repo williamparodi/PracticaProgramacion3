@@ -9,8 +9,13 @@ include_once "venta.php";
 
 class ConsultasVentas
 {    
-    public static function MuestraConsultas($fecha1,$fecha2,$mailUsuario,$sabor)
+    public static function MuestraConsultas()
     {
+        $sabor = $_GET["_sabor"];
+        $mailUsuario = $_GET["_mailUsuario"];
+        $fecha1 = $_GET["_fecha1"];
+        $fecha2 = $_GET["_fecha2"];
+        
         echo "a-Cantidad de pizzas vendidas : ".Venta::CalculaCantidadVendida()."<br/>";
         echo "b-Listado de ventas entre dos fechas: ".Venta::ListaVentasEntreFechas($fecha1,$fecha2)."<br/>";
         echo "c-Listado de ventas de un usuario: ".Venta::ListaPorUsuario($mailUsuario)."<br/>";

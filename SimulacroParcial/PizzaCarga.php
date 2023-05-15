@@ -13,10 +13,15 @@ include_once "pizza.php";
 
 class PizzaCarga
 {
-    public static function AltaPizza($pizzaPost)
+    public static function AltaPizza()
     { 
+        $sabror = $_POST["_sabor"];
+        $precio = $_POST["_precio"];
+        $tipo = $_POST["_tipo"];
+        $cantidad = $_POST["_cantidad"];
+        $pizzaPost = new Pizza($sabror, $precio, $tipo, $cantidad);
         $array = Pizza::LeeJson();
-        
+
         if(!Pizza::SumaCantidadPizza($array,$pizzaPost))
         {
             array_push($array,$pizzaPost);

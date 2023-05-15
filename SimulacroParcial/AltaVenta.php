@@ -8,8 +8,13 @@ include_once "venta.php";
 
 class AltaVenta
 {
-    public static function AltaVenta($venta)
+    public static function AltaVenta()
     {
+        $mailUsuario = $_POST["_mailUsuario"];
+        $sabor = $_POST["_sabor"];
+        $tipo = $_POST["_tipo"];
+        $cantidad = $_POST["_cantidad"];
+        $venta = new Venta($sabor,NULL,$tipo,$cantidad,$mailUsuario);
         $arrayPizza = Pizza::LeeJson();
         $arrayVenta = Venta::LeeJson();
         $pizza = new Pizza($venta->GetSabor(),0,$venta->GetTipo(),$venta->GetCantidad());

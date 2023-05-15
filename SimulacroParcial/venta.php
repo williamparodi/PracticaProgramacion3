@@ -280,7 +280,7 @@ class Venta extends Pizza
                 if($flag)
                 {
                     Venta::GuardaJson($arrayVentas);
-                    echo "Se modifico la venta";
+                    echo "Se modifico la venta"."<br/>";
                 }
                 else
                 {
@@ -310,7 +310,6 @@ class Venta extends Pizza
             {
                 $rutaBackup = $rutaBackup.$nombreImagen;
                 rename($value,$rutaBackup);//cambia la direccion vieja por la nueva
-                unlink($value);
                 $retorno = true;
             }
         }

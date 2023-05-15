@@ -1,44 +1,44 @@
 [
     {
         "_sabor": "anchoas",
-        "_precio": "656",
+        "_precio": "1000",
+        "_tipo": "molde",
+        "_cantidad": 0,
+        "_id": 8236
+    },
+    {
+        "_sabor": "cebolla",
+        "_precio": "1000",
+        "_tipo": "molde",
+        "_cantidad": "50",
+        "_id": 2591
+    },
+    {
+        "_sabor": "cebolla",
+        "_precio": "1000",
         "_tipo": "piedra",
-        "_cantidad": 50,
-        "_id": 1
+        "_cantidad": 45,
+        "_id": 1554
     },
     {
         "_sabor": "anchoas",
-        "_precio": "656",
-        "_tipo": "molde",
+        "_precio": "1500",
+        "_tipo": "piedra",
         "_cantidad": 50,
-        "_id": 1
+        "_id": 2273
     },
     {
         "_sabor": "muzzarella",
-        "_precio": "656",
+        "_precio": "1500",
         "_tipo": "piedra",
-        "_cantidad": 1149,
-        "_id": 1
-    },
-    {
-        "_sabor": "cebolla",
-        "_precio": "545",
-        "_tipo": "piedra",
-        "_cantidad": 29,
-        "_id": 1
-    },
-    {
-        "_sabor": "cebolla",
-        "_precio": "545",
-        "_tipo": "molde",
-        "_cantidad": 22,
-        "_id": 1
+        "_cantidad": 32,
+        "_id": 8075
     },
     {
         "_sabor": "muzzarella",
-        "_precio": "545",
+        "_precio": "1500",
         "_tipo": "molde",
-        "_cantidad": 22,
-        "_id": 1
+        "_cantidad": 5,
+        "_id": 5013
     }
 ]

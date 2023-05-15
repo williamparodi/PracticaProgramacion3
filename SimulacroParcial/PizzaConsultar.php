@@ -6,9 +6,12 @@ include_once "pizza.php";
 
 class PizzaConsultar
 {
-    static function MuestraSiHay($pizzaGet)
+    static function MuestraSiHay()
     {
         $flag = false;
+        $sabor = $_GET["_sabor"];
+        $tipo = $_GET["_tipo"];
+        $pizzaGet = new Pizza($sabor,NULL,$tipo,NULL);
         $array = Pizza::LeeJson();
         foreach ($array as $pizza1) 
         {
