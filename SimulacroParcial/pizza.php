@@ -1,7 +1,6 @@
 <?php
 class Pizza
 {
-    private static $_idIncremental = 1;
     private $_sabor;
     private $_precio;
     private $_tipo;
@@ -16,13 +15,13 @@ class Pizza
             $this->_sabor =$sabor;
             $this->_precio = $precio;
             $this->_cantidad = $cantidad;
-            $this->_id = self::$_idIncremental;
+            $this->_id = rand(1,10000);
         }
         else
         {
             $this->_tipo = "Sin tipo";
         }
-        self::$_idIncremental++;  
+         
     }
 
     public function GetSabor()
@@ -188,6 +187,29 @@ class Pizza
         }
     
     }
+
+    public static function GuardaImagen($pizza)
+    {
+        $imagenSabor = Venta::ElijeImagenPizza($pizza->GetSabor());
+        $datosImagen = $pizza->GetSabor()."_".$pizza->GetTipo().".jpg";
+        $rutaImagen = $imagenSabor;
+        $rutaDestino ="ImagenesDePizzas/".$datosImagen;
+        copy($rutaImagen,$rutaDestino);
+        return $datosImagen;
+    }
+
+    /*
+    public static function GuardaImagenPizza($venta)
+    {
+        $cortaString = strpos($venta->GetMailUsuario(),"@");
+        $datosImagen = $venta->GetSabor()."_".$venta->GetTipo()."_".
+                        substr($venta->GetMailUsuario(),0,$cortaString)."_".
+                        $venta->GetFecha().".jpg";
+        $ruta ="ImagenesDeLaVenta/".$_FILES["archivo"]["name"];
+        $nombreCompleto = $ruta.$datosImagen;
+        move_uploaded_file($_FILES["archivo"]["tmp_name"],$nombreCompleto);
+        return $datosImagen;
+    }*/
 
 }
 ?>

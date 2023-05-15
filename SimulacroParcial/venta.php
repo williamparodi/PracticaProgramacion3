@@ -10,7 +10,6 @@ el @) y fecha de la venta en la carpeta /ImagenesDeLaVenta.*/
 
 class Venta extends Pizza
 {
-    static $_idIncremental = 1;
     private $_numeroPedido;
     private $_mailUsuario;
     private $_fecha;
@@ -19,11 +18,10 @@ class Venta extends Pizza
     public function __construct($sabor,$precio=0,$tipo,$cantidad=0,$mailUsuario = "Sin Mail")
     {
         parent::__construct($sabor,$precio,$tipo,$cantidad);
-        $this->_fecha = date("m.d.y");
+        $this->_fecha = date("Y-m-d");
         $this->_numeroPedido = rand(1,10000);
-        $this->_idVenta = self::$_idIncremental;
+        $this->_idVenta = rand(1,10000);
         $this->_mailUsuario = $mailUsuario;
-        self::$_idIncremental++;
     }
 
     public function GetFecha()
@@ -66,6 +64,10 @@ class Venta extends Pizza
         $this->_numeroPedido = $numeroPedido;
     }
 
+    public function SetMailUsuario($mail)
+    {
+        $this->_mailUsuario = $mail;
+    }
     public static function LeeJson()
     {
         $fileJson = __DIR__ . "/ventas.json";
@@ -148,6 +150,152 @@ class Venta extends Pizza
         move_uploaded_file($_FILES["archivo"]["tmp_name"],$nombreCompleto);
         return $datosImagen;
     }
-}
+
+    public static function CalculaCantidadVendida()
+    {
+        $arrayVentas = self::LeeJson();
+        $cantidad = 0;
+        foreach($arrayVentas as $venta)
+        {
+            $cantidad+=$venta->GetCantidad();
+        }
+        return $cantidad;
+    }
+
+    public static function OrdenaPorsabor($lista)
+    {
+        usort($lista,function($venta1,$venta2)
+        {
+            return strcmp($venta1->GetSabor(),$venta2->GetSabor());
+        });
+        return $lista;
+    }
+
+    public static function ComparaFechas($fecha1,$fecha2)
+    {
+       return strcmp($fecha1,$fecha2);
+    }
+
+    public static function ListaVentasEntreFechas($fecha1,$fecha2)
+    {
+        $arrayVentas = self::LeeJson();
+        $listaEntreFechas = array();
+        foreach($arrayVentas as $venta)
+        {
+            if(self::ComparaFechas($venta->GetFecha(),$fecha1) >=0 && self::ComparaFechas($venta->GetFecha(),$fecha2) <= 0)
+            {
+                array_push($listaEntreFechas,$venta);
+            }
+        }
+        $listaOrdenada = self::OrdenaPorsabor($listaEntreFechas);
+        $listaOrdenada = self::ListaOrdenada($listaOrdenada);  
+        return $listaOrdenada;
+    }
+
+    public static function ListaOrdenada($listaVentas)
+    {
+        $lista = "<ul>\n";
+        foreach ($listaVentas as $venta) 
+        {
+            $lista .= "<li>Id: " . $venta->GetId() .
+                " - Fecha: " . $venta->GetFecha() .
+                " - Mail Usuario: " . $venta->GetMailUsuario() .
+                " - Numero Pedido: " . $venta->GetNumeroPedido() .
+                " - Sabor: " . $venta->GetSabor() .
+                " - Cantidad: " . $venta->GetCantidad() . "</li>\n";
+        } 
+        $lista .= "</ul>\n";
+        return $lista;       
+    }
+
+    public static function ListaPorUsuario($mail)
+    {
+        $arrayVentas = self::LeeJson();
+        $lista = "<ul>\n";
+        foreach($arrayVentas as $venta)
+        {
+            if($mail == $venta->GetMailUsuario())
+            {
+                $lista .= "<li>Id: " . $venta->GetId() .
+                " - Fecha: " . $venta->GetFecha() .
+                " - Mail Usuario: " . $venta->GetMailUsuario() .
+                " - Numero Pedido: " . $venta->GetNumeroPedido() .
+                " - Sabor: " . $venta->GetSabor() .
+                " - Cantidad: " . $venta->GetCantidad() . "</li>\n";
+            }
+        }
+        $lista .= "</ul>\n";
+        return $lista;
+    }
+
+    public static function ListaUnaVenta($venta)
+    {
+        $lista = "<ul>\n";
+        $lista .= "<li>Id: " . $venta->GetId() .
+            " - Fecha: " . $venta->GetFecha() .
+            " - Mail Usuario: " . $venta->GetMailUsuario() .
+            " - Numero Pedido: " . $venta->GetNumeroPedido() .
+            " - Sabor: " . $venta->GetSabor() .
+            " - Cantidad: " . $venta->GetCantidad() . "</li>\n";
+
+        $lista .= "</ul>\n";
+        return $lista;
+    }
+
+    public static function ListaPorSabor($sabor)
+    {
+        $arrayVentas = self::LeeJson();
+        $lista = "<ul>\n";
+        foreach($arrayVentas as $venta)
+        {
+            if($sabor == $venta->GetSabor())
+            {
+                $lista .= self::ListaUnaVenta($venta);
+            }
+        }
+        $lista .= "</ul>\n";
+        return $lista;
+    }
+    
+    public static function ModificarVenta($sabor,$tipo,$numeroPedido,$mailUsuario,$cantidad)
+    {
+        try
+        {
+            $flag = false;
+            $arrayVentas = Venta::LeeJson();
+            if(is_numeric($numeroPedido)&& $numeroPedido != NULL)
+            {
+                foreach($arrayVentas as $venta)
+                {
+                    if($numeroPedido == $venta->GetNumeroPedido())
+                    {
+                        if(is_string($sabor) && is_string($tipo) && $tipo == "molde" || 
+                        $tipo == "piedra" && is_numeric($cantidad))
+                        {
+                            $venta->SetSabor($sabor);
+                            $venta->SetTipo($tipo);
+                            $venta->SetCantidad($cantidad);
+                            $venta->SetMailUsuario($mailUsuario);
+                            $flag = true;
+                        }
+                    }
+                }
+                if($flag)
+                {
+                    Venta::GuardaJson($arrayVentas);
+                    echo "Se modifico la venta";
+                }
+                else
+                {
+                    echo "No existe esa venta";
+                }
+            }
+        }
+        catch (Exception $e)
+        {
+            echo "Debe ser un numero valido el pedido".$e->getMessage();
+        }
+    }
+}   
 
 ?>

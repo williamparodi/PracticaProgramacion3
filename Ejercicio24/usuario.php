@@ -137,25 +137,6 @@ class Usuario
 
         if($arrayUsuarios != NULL && count($arrayUsuarios) >0)
         {
-            /*
-            foreach($arrayUsuarios as $usuario)
-            {
-                $arrayUsuario= array($usuario->GetId(),
-                                $usuario->GetNombre(),
-                                $usuario->GetMail(),
-                                $usuario->GetClave(),
-                                $usuario->GetFechaDeRegistro());
-
-                list($id,$nombre,$mail,$clave,$fecha) = $arrayUsuario;
-                
-                echo "Id: $id <br/>". 
-                "Nombre: $nombre <br/>". 
-                "Mail : $mail <br/>". 
-                "Clave :$clave <br/>". 
-                "Fecha de registro : $fecha <br/>";
-                echo "<br/>";
-            
-            } Ver cual de las dos usar */
             $lista = "<ul>\n";
             foreach ($arrayUsuarios as $usuario)
             {

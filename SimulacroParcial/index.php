@@ -3,6 +3,8 @@
 include_once "PizzaCarga.php";
 include_once "PizzaConsultar.php";
 include_once "AltaVenta.php";
+include_once "ConsultasVentas.php";
+include_once "ModificarVenta.php";
 
 $listaPostMan = $_GET["_lista"];
 
@@ -29,6 +31,16 @@ switch($listaPostMan)
         $cantidad = $_POST["_cantidad"];
         $ventaPost = new Venta($sabor,NULL,$tipo,$cantidad,$mailUsuario);
         AltaVenta::AltaVenta($ventaPost);
+        break;
+    case "ConsultasVentas":
+        $sabor = $_GET["_sabor"];
+        $mailUsuario = $_GET["_mailUsuario"];
+        $fecha1 = $_GET["_fecha1"];
+        $fecha2 = $_GET["_fecha2"];
+        ConsultasVentas::MuestraConsultas($fecha1,$fecha2,$mailUsuario,$sabor);
+        break;
+    case "ModificarVenta":
+        ModificarVenta::ModificarPorPut();
         break;
     default:
         echo "No existe esa lista";
