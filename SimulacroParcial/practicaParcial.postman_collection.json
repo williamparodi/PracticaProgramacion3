@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "ebb49cb6-437f-4941-b7d6-32b6d105f76e",
+		"name": "practicaParcial",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26570865"
+	},
+	"item": [
+		{
+			"name": "ConsultasVentas",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Consulto que haya",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost/SimulacroParcial/index.php?_lista=PizzaConsultar&_sabor=anchoas&_tipo=qdqdqdqd",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SimulacroParcial",
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "_lista",
+							"value": "PizzaConsultar"
+						},
+						{
+							"key": "_sabor",
+							"value": "anchoas"
+						},
+						{
+							"key": "_tipo",
+							"value": "qdqdqdqd"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ingresoPizza",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "_sabor",
+							"value": "muzzarella",
+							"type": "text"
+						},
+						{
+							"key": "_precio",
+							"value": "545",
+							"type": "text"
+						},
+						{
+							"key": "_tipo",
+							"value": "piedra",
+							"type": "text"
+						},
+						{
+							"key": "_cantidad",
+							"value": "52",
+							"type": "text"
+						},
+						{
+							"key": "archivo",
+							"type": "file",
+							"src": "/C:/xampp/htdocs/SimulacroParcial/imagenesPizza/muzzarella.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/SimulacroParcial/index.php?_lista=PizzaCarga",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SimulacroParcial",
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "_lista",
+							"value": "PizzaCarga"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AltaVenta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"<!doctype html>\r",
+							"<html>\r",
+							"<head>\r",
+							"<title>Subir Archivos</title>\r",
+							"</head>\r",
+							"<body>\r",
+							"<form action=\"upload.php\" method=\"post\"\r",
+							"enctype=\"multipart/form-data\">\r",
+							"<input type=\"file\" name=\"archivo\" />\r",
+							"<input type=\"submit\" value=\"Subir\" />\r",
+							"</form>\r",
+							"</body>\r",
+							"</html>"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "_mailUsuario",
+							"value": "pepito@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "_sabor",
+							"value": "anchoas",
+							"type": "text"
+						},
+						{
+							"key": "_cantidad",
+							"value": "2",
+							"type": "text"
+						},
+						{
+							"key": "_tipo",
+							"value": "piedra",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost/SimulacroParcial/index.php?_lista=AltaVenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SimulacroParcial",
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "_lista",
+							"value": "AltaVenta"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ModificarPut",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_numeroPedido\":5592,\r\n    \"_sabor\":\"muzzarella\",\r\n    \"_tipo\":\"molde\",\r\n    \"_cantidad\":6,\r\n    \"_mailUsuario\":\"roke@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost/SimulacroParcial/index.php?_lista=ModificarVenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SimulacroParcial",
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "_lista",
+							"value": "ModificarVenta"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "borrarVenta",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/SimulacroParcial/index.php?_lista=BorrarVenta&_numeroPedido=8596",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"SimulacroParcial",
+						"index.php"
+					],
+					"query": [
+						{
+							"key": "_lista",
+							"value": "BorrarVenta"
+						},
+						{
+							"key": "_numeroPedido",
+							"value": "8596"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
