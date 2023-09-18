@@ -1,4 +1,15 @@
 <?php
+/*Realizar un método de instancia llamado “AgregarImpuestos”, que recibirá un doble
+por parámetro y que se sumará al precio del objeto.
+Realizar un método de clase llamado “MostrarAuto”, que recibirá un objeto de tipo “Auto”
+por parámetro y que mostrará todos los atributos de dicho objeto.
+Crear el método de instancia “Equals” que permita comparar dos objetos de tipo “Auto”. Sólo
+devolverá TRUE si ambos “Autos” son de la misma marca.
+Crear un método de clase, llamado “Add” que permita sumar dos objetos “Auto” (sólo si son
+de la misma marca, y del mismo color, de lo contrario informarlo) y que retorne un Double con
+la suma de los precios o cero si no se pudo realizar la operación.
+Ejemplo: $importeDouble = Auto::Add($autoUno, $autoDos);
+*/
 
 class Auto
 {
@@ -7,29 +18,25 @@ class Auto
     private $_marca;
     private $_fecha;
 
-    public function __construct($marca,$color,$precio = 0.00,$fecha = "sin fecha")
+    public function __construct($marca,$color,$precio=0.00,$fecha="0/00/0000")
     {
-        if(is_string($marca) && is_string($color) && $marca != NULL && $color != NULL)
+        $this->_marca = $marca;
+        $this->_color = $color;
+        if(!is_nan($precio))
         {
-            $this->_marca = $marca;
-            $this->_color = $color;
-            if(is_double($precio) && $precio != NULL)
-            {
-                $this->_precio = (double)$precio;
-            }
-            if(is_string($fecha) && $fecha != NULL)
-            {
-                $this->_fecha = $fecha;
-            }
-            
-        }    
+            $this->_precio = (double)$precio;
+        }
+        if(is_string($fecha))
+        {
+            $this->_fecha = $fecha;
+        }
     }
 
-    public function AgregarImpuestos($impuestos)
+    public function AgregarImpuestos($impuesto)
     {
-        if(is_double($impuestos) && $impuestos> 0)
+        if(!is_nan($impuesto) && $impuesto >0)
         {
-            $this->_precio += (double)$impuestos;    
+            $this->_precio += $impuesto;        
         }
     }
 
@@ -37,42 +44,44 @@ class Auto
     {
         if($auto != NULL)
         {
-            $datosDelAuto="Caracteristicas del Auto:<br/>".
-            "Marca :.$auto->_marca <br/>".
-            "Color : $auto->_color <br/>".
-            "Precio :$auto->_precio <br/>".
-            "Fecha :$auto->_fecha <br/>";
-            return $datosDelAuto;
+           echo "Auto:<br/>";
+           echo "Marca: $auto->_marca <br/>";
+           echo "Color: $auto->_color <br/>";
+           echo "Precio: $auto->_precio <br/>";
+           echo "Fecha: $auto->_fecha <br/>";
         }
     }
 
-    public function Equals($auto1,$auto2)
+    public function Equals($autoUno,$autoDos)
     {
         $retorno = false;
-        if($auto1 != NULL && $auto2 != NULL)
+        if($autoUno != NULL && $autoDos != NULL)
         {
-            if($auto1->_marca == $auto2->_marca)
+            if($autoUno->_marca == $autoDos->_marca)
             {
                 $retorno = true;
             }
         }
+
         return $retorno;
     }
 
-    public static function Add($auto1,$auto2)
+    public static function Add($autoUno,$autoDos)
     {
-        $importeTotal = (double)0;
-        if($auto1 == $auto2 && $auto1->_color == $auto2->_color)
+        $precioSumado = 0;
+        if($autoUno != NULL && $autoDos != NULL)
         {
-            $importe = (double)$auto1->_precio + $auto2->_precio;
+            if($autoUno->Equals($autoUno,$autoDos) && $autoUno->_color == $autoDos->_color)
+            {
+                $precioSumado+= (double)$autoUno->_precio + $autoDos->_precio;
+            }
+            else
+            {
+                echo "Los autos son distintos no se pudo sumar<br/>";
+            }
         }
-        else
-        {
-            echo "Los autos son diferentes no se pueden sumar importes <br/>";
-        }
-        return $importeTotal;
+        return $precioSumado;
     }
 
 }
-
 ?>

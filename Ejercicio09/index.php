@@ -1,51 +1,44 @@
 <?php
-/*Aplicación Nº 9 (Arrays asociativos) Segunda Version!
+/*
+Aplicación No 9 (Arrays asociativos)
 Realizar las líneas de código necesarias para generar un Array asociativo $lapicera, que
 contenga como elementos: ‘color’, ‘marca’, ‘trazo’ y ‘precio’. Crear, cargar y mostrar tres
-lapiceras*/
+lapiceras.*/ 
 
-//Creo unos array con valores para cargar los elementos 
-$colores = array("amarillo", "verde", "azul");
-$marca = array("BBB", "Filgo", "Faber");
-$trazo = array("Grueso", "Fino", "Medio");
+$lapicera1["color"] = "rojo";
+$lapicera1["marca"] = "Buena";
+$lapicera1["trazo"] =  "grueso";
+$lapicera1["precio"] =  500.63;
 
-$lapicera1 = CargarArray($colores,$marca,$trazo);
-$lapicera2 = CargarArray($colores,$marca,$trazo);
-$lapicera3 = CargarArray($colores,$marca,$trazo);
+$lapicera2["color"] = "amarillo";
+$lapicera2["marca"] = "Excelente";
+$lapicera2["trazo"] =  "fino";
+$lapicera2["precio"] =  800.56;
 
-foreach ($lapicera1 as $k => $valor)
+$lapicera3["color"] = "azul";
+$lapicera3["marca"] = "Muy buena";
+$lapicera3["trazo"] =  "fino";
+$lapicera3["precio"] =  1855.63;
+
+echo "Lapicera 1 : <br/>";
+
+foreach($lapicera1 as $k => $valor)
 {
-    echo "Caracteristicas de la Lapicera 1: $k = $valor <br/>";
+    echo "$k = $valor <br/>";
+}
+echo "------------------<br/>";
+
+echo "Lapicera 2 : <br/>";
+foreach($lapicera2 as $k => $valor)
+{
+    echo "$k = $valor <br/>";
 }
 
-echo "<br/>";
+echo "------------------<br/>";
 
-foreach ($lapicera2 as $k => $valor)
+echo "Lapicera 3 : <br/>";
+foreach($lapicera3 as $k => $valor)
 {
-    echo "Caracteristicas de la Lapicera 2: $k = $valor <br/> ";
-}
-
-echo "<br/>";
-
-foreach ($lapicera3 as $k => $valor)
-{
-    echo "Caracteristicas de la Lapicera 3: $k = $valor <br/>";
-}
-
-//Funcion para cargar los array
-function CargarArray($arrayColores,$arrayMarca,$arrayTrazo)
-{
-    //Tiro un random para cada uno y me devuelve un indice
-    $indiceColores = array_rand($arrayColores);
-    $indiceMarca = array_rand($arrayMarca);
-    $indiceTrazo = array_rand($arrayTrazo);
-
-    //Cargo los elementos en el array con el indice
-    $lapiceraAux['color'] = $arrayColores[$indiceColores];
-    $lapiceraAux['marca'] = $arrayMarca[$indiceMarca];
-    $lapiceraAux['trazo'] = $arrayTrazo[$indiceTrazo];
-    $lapiceraAux['precio'] = rand(100, 1000);
-    
-    return $lapiceraAux;
+    echo "$k = $valor <br/>";
 }
 ?>

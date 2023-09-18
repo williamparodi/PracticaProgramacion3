@@ -1,95 +1,114 @@
 <?php
-/*
-Aplicación Nº 5 (Números en letras)
+/*Jon William Parodi
+Aplicación No 5 (Números en letras)
 Realizar un programa que en base al valor numérico de una variable $num, pueda mostrarse
 por pantalla, el nombre del número que tenga dentro escrito con palabras, para los números
 entre el 20 y el 60.
-Por ejemplo, si $num = 43 debe mostrarse por pantalla “cuarenta y tres”.
-*/
+Por ejemplo, si $num = 43 debe mostrarse por pantalla “cuarenta y tres”.*/ 
 
 $num = rand(20,60);
-$numeroEscrito = " ";
-$numeroEscrito2 = " ";
+echo "Numero: $num<br/>";
+$numEscrito1;
+$numEscrito2;
 
-echo "El numero es: $num";
-echo "<br/>";
-
-if($num == 20)
+if($num >20 && $num <30)
 {
-    $numeroEscrito = "veinte";
-    echo "El numero escrito es: $numeroEscrito";
+    $numEscrito1="veinti";
+    $numAux= $num - 20;
+    $numEscrito2 = nombraNumero($numAux);
+    echo "El numero escrito es $numEscrito1$numEscrito2<br/>";
+}
+else if($num >= 30 && $num < 40)
+{
+    $numEscrito1="treinta";
+    $numAux= $num - 30;
+    $numEscrito2 = nombraNumero($numAux);
+    if($num == 30)
+    {
+        echo "El numero escrito es $numEscrito1<br/>";
+    }
+    else
+    {
+        echo "El numero escrito es $numEscrito1 y $numEscrito2<br/>";
+    }
+}
+else if($num >=40 && $num <50)
+{
+    $numEscrito1="cuarenta";
+    $numAux= $num - 40;
+    $numEscrito2 = nombraNumero($numAux);
+    if($num == 40)
+    {
+        echo "El numero escrito es $numEscrito1<br/>";
+    }
+    else
+    {
+        echo "El numero escrito es $numEscrito1 y $numEscrito2<br/>";
+    }
+}
+else if($num >=50 && $num < 60)
+{
+    $numEscrito1="cincuenta";
+    $numAux= $num - 50;
+    $numEscrito2 = nombraNumero($numAux);
+    if($num == 50)
+    {
+        echo "El numero escrito es $numEscrito1<br/>";
+    }
+    else
+    {
+        echo "El numero escrito es $numEscrito1 y $numEscrito2<br/>";
+    }
 }
 else if($num == 60)
 {
-    $numeroEscrito = "sesenta";
-    echo "El numero escrito es: $numeroEscrito";
-
-}
-else if($num > 20 && $num <30)
-{
-    $numeroEscrito = "vienti";
-    $num = $num - 20;
-    $numeroEscrito2 = nombraNumero($num);
-    echo "El numero escrito es : $numeroEscrito$numeroEscrito2";
-}
-else if($num >=30 && $num <= 39)
-{
-    $numeroEscrito = "treinta";
-    $num = $num - 30;
-    $numeroEscrito2 = nombraNumero($num);
-    echo "El numero escrito es : $numeroEscrito y $numeroEscrito2";
-}
-else if($num >= 40 && $num <= 49)
-{
-    $numeroEscrito = "cuarenta";
-    $num = $num - 40;
-    $numeroEscrito2 = nombraNumero($num);
-    echo "El numero escrito es : $numeroEscrito y $numeroEscrito2";
+    echo "El numero escrito es sesenta";
 }
 else
 {
-    $numeroEscrito = "cincuenta";
-    $num = $num - 50;
-    $numeroEscrito2 = nombraNumero($num);
-    echo "El numero escrito es : $numeroEscrito y $numeroEscrito2";
-}
+    echo "El numero escrito es veinte";
+} 
 
+//Funcion
 function nombraNumero($numero)
 {
-    $numeroRetorno = " ";
+    $numeroEscrito= "";
     switch($numero)
     {
         case 1:
-            $numeroRetorno = "uno";
+            $numeroEscrito="uno";
             break;
         case 2:
-            $numeroRetorno = "dos";
+            $numeroEscrito="dos";
             break;
         case 3:
-            $numeroRetorno = "tres";
+            $numeroEscrito="tres";
             break;
-        case 4:
-            $numeroRetorno = "cuatro";
-            break;
+        case 4: 
+           $$numeroEscrito="cuatro";
+           break;
         case 5:
-            $numeroRetorno = "cinco"; 
+            $numeroEscrito="cinco";
             break;
         case 6:
-            $numeroRetorno = "seis"; 
+            $numeroEscrito="seis";
             break;
-        case 7:
-            $numeroRetorno = "siete";
+        case 7: 
+            $numeroEscrito="siete";
             break;
         case 8:
-            $numeroRetorno = "ocho";
+            $numeroEscrito="ocho";
             break;
         case 9:
-            $numeroRetorno = "nueve";
+            $numeroEscrito="nueve";
             break;
         default:
             break;
     }
-    
-    return $numeroRetorno;
+
+    return $numeroEscrito;
 }
+
+
+
 ?>

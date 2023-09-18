@@ -12,31 +12,39 @@
         "_nombre": "mosnter",
         "_precio": "5656",
         "_tipo": "doble",
-        "_aderezo": "moztaza",
-        "_cantidad": "50"
+        "_aderezo": null,
+        "_cantidad": null
     },
     {
         "_id": 9866,
         "_nombre": "monster",
         "_precio": "5656",
         "_tipo": "doble",
-        "_aderezo": "moztaza",
-        "_cantidad": "50"
+        "_aderezo": null,
+        "_cantidad": null
     },
     {
         "_id": 9874,
         "_nombre": "grande",
         "_precio": "5656",
         "_tipo": "doble",
-        "_aderezo": "moztaza",
-        "_cantidad": 150
+        "_aderezo": null,
+        "_cantidad": null
     },
     {
         "_id": 4032,
         "_nombre": "chica",
         "_precio": "5656",
         "_tipo": "doble",
-        "_aderezo": "moztaza",
-        "_cantidad": "50"
+        "_aderezo": null,
+        "_cantidad": 50
+    },
+    {
+        "_id": 7689,
+        "_nombre": "chica",
+        "_precio": "5656",
+        "_tipo": null,
+        "_aderezo": null,
+        "_cantidad": null
     }
 ]

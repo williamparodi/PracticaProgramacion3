@@ -9,22 +9,36 @@ class Hamburguesa
     private $_aderezo;
     private $_cantidad;
 
-    public function __construct($nombre,$precio,$tipo="Sin tipo",$aderezo="sin aderezo",$cantidad=0)
+    public function __construct($nombre,$precio,$tipo=NULL,$aderezo=NULL,$cantidad=0)
     {
-      
-        $this->_nombre = $nombre;
-        $this->_precio = $precio;
-        $this->_id = rand(1,10000);
-        if($tipo == "simple" || $tipo == "doble")
+        try
         {
-            $this->_tipo = $tipo;
+            $this->_nombre = $nombre;
+            $this->_precio = $precio;
+            $this->_id = rand(1,10000);
+            if($tipo == "simple" || $tipo == "doble" || $tipo=NULL)
+            {
+                $this->_tipo = $tipo;
+            }
+            else
+            {
+                throw new Exception("El tipo debe ser simple o doble");
+            }
+            if($aderezo == "mostaza" || $aderezo == "ketchup" || $aderezo == "mayonesa" || $aderezo = NULL)
+            {
+                $this->_aderezo = $aderezo;
+            }
+            else
+            {
+                throw new Exception("Debe ser un aderezo valido: mostaza , mayonesa o ketchup");
+            }
+            $this->_cantidad = $cantidad;
         }
-        else
+        catch(Exception $e)
         {
-            throw new Exception("El tipo debe ser simple o doble");
+            echo "Error: ",$e->getMessage(),"<br/>";
         }
-        $this->_aderezo = $aderezo;
-        $this->_cantidad = $cantidad;
+    
     }
 
     public function GetNombre()
@@ -227,7 +241,7 @@ class Hamburguesa
         $flag = false;
         $nombre= $_GET["_nombre"];
         $tipo = $_GET["_tipo"];
-        $hamburguesa = new Hamburguesa($nombre,NULL,$tipo,NULL,0);
+        $hamburguesa = new Hamburguesa($nombre,0,$tipo,NULL,0);
         $array = self::LeeJson();
         foreach ($array as $hamburguesa1) 
         {

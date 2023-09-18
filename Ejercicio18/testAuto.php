@@ -1,39 +1,40 @@
 <?php
-/*En testGarage.php, crear autos y un garage. Probar el buen funcionamiento de todos
-los métodos.*/
+require_once "Garage.php";
 
-include_once "index.php";
-include_once "auto.php";
+$autoUno = new Auto("Benz","rojo");
+$autoDos = new Auto("Benz","azul");
+$autoTres = new Auto("Ford","amarillo",800.00);
+$autoCuatro = new Auto("Ford","amarillo",1200.00);
+$autoCinco = new Auto("Chevrolet","Violeta",8000.00,"23/07/2023");
 
-$auto1 = new Auto("El peor","Rojo");
-$auto2 = new Auto("El peor","Azul");
-$auto3 = new Auto("Chevrolet","Rojo",3450.00);
-$auto4 = new Auto("Ford","Rojo",4350.00,"06/65/22");
-$auto5 = new Auto("Mercedez","Rosa",43434.00,"23/03/23");
+$garage1 = new Garage("Mataderos");
+$garage2 = new Garage("Tortuguitas",456.00);
 
-$garage1 = new Garage("Responsable Inscripto");
-$garage2 = new Garage("Monotributista",560.6);
+//Añado al garage 1
+$garage1->Add($autoTres);
+$garage1->Add($autoTres);
+echo "---------------<br/>";
+//Muestro garages
+echo "Garage 1: <br/>";
+$garage1->MostarGarage();
 
-$garage1->Add($auto1);
-$garage1->Add($auto2);
-$garage1->Add($auto3);
+echo "---------------<br/>";
+echo "Garage 2: <br/>";
+$garage2->MostarGarage();
+echo "---------------<br/>";
 
-$garage2->Add($auto1);
-$garage2->Add($auto3);
-$garage2->Add($auto5);
-echo "<br/>";
+//Borro en el garage 1
+$garage1->Remove($autoUno);
+$garage1->Remove($autoTres);
+echo "Garage 1: <br/>";
+$garage1->MostarGarage();
 
-$garage1->MostrarGarage();
-echo "<br/>";
-$garage2->MostrarGarage();
+echo "---------------<br/>";
+//Añado al dos y muestro: 
+$garage2->Add($autoDos);
+$garage2->Add($autoCuatro);
+$garage2->Add($autoCinco);
+$garage2->MostarGarage();
 
-$garage1->Remove($auto1);
-$garage1->Remove($auto5);
-$garage1->Remove($auto4);
-$garage1->Add($auto4);
-$garage1->Remove($auto4);
-
-echo "<br/>";
-$garage1->MostrarGarage();
 
 ?>

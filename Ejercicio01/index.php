@@ -1,21 +1,27 @@
 <?php
-/*
-Aplicación Nº 1 (Sumar números)
+/*Jon William Parodi
+Aplicación No 1 (Sumar números)
 Confeccionar un programa que sume todos los números enteros desde 1 mientras la suma no
 supere a 1000. Mostrar los números sumados y al finalizar el proceso indicar cuantos números
-se sumaron.
-*/
+se sumaron.*/
 
-$total = 0;
+$suma =0;
 $contador = 0;
-$numero = rand(1,100);
 
-for($i=0;$total < 1000;$i++)
+while($suma < 1000)
 {
-    print("<br/> Los numeros sumados son: $total y $numero");
-    $total += $numero;
-    $contador++;
+    $numero = rand(1,100);
+    echo "Numero a sumar :$numero<br/>";
+    if($suma+$numero < 1000)
+    {
+        $suma+=$numero;
+        $contador++;
+    }
+    else
+    {
+        break;
+    }
 }
 
-print("<br/>La cantidad de numero es $contador");
+echo "La suma es : $suma y la cantidad de numeros sumados es $contador <br/>";
 ?>

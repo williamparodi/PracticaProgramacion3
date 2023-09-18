@@ -1,33 +1,56 @@
 <?php
-include_once "index.php";
+require_once "Auto.php";
+/*
 
-$auto1 = new Auto("El peor","Rojo");
-$auto2 = new Auto("El peor","Azul");
-$auto3 = new Auto("Chevrolet","Rojo",3450.00);
-$auto4 = new Auto("Chevrolet","Rojo",4350.00);
-$auto5 = new Auto("Mercedez","Rosa",43434.00,"23/03/23");
+En testAuto.php:
+● Crear dos objetos “Auto” de la misma marca y distinto color.
+● Crear dos objetos “Auto” de la misma marca, mismo color y distinto precio.
+● Crear un objeto “Auto” utilizando la sobrecarga restante.
 
-$impuestos = (double)1500;
-$total = (double)0;
+● Utilizar el método “AgregarImpuesto” en los últimos tres objetos, agregando $ 1500
+al atributo precio.
+● Obtener el importe sumado del primer objeto “Auto” más el segundo y mostrar el
+resultado obtenido.
+● Comparar el primer “Auto” con el segundo y quinto objeto e informar si son iguales o
+no.
+● Utilizar el método de clase “MostrarAuto” para mostrar cada los objetos impares (1, 3,
+5)*/
 
-$auto3->AgregarImpuestos($impuestos);
-$auto4->AgregarImpuestos($impuestos);
-$auto5->AgregarImpuestos($impuestos);
+$autoUno = new Auto("Benz","rojo");
+$autoDos = new Auto("Benz","azul");
+$autoTres = new Auto("Ford","amarillo",800.00);
+$autoCuatro = new Auto("Ford","amarillo",1200.00);
+$autoCinco = new Auto("Chevrolet","Violeta",8000.00,"23/07/2023");
 
-$total = Auto::Add($auto1,$auto2);
-echo "El precio total de los autos 1 mas el 2 es de: $total <br/>";
+$autoTres->AgregarImpuestos(1500.00);
+$autoCuatro->AgregarImpuestos(1500.00);
+$autoCinco->AgregarImpuestos(1500.00);
 
-if($auto3->Equals($auto2,$auto5))
+echo "El resultado sumado del Auto1 mas el Auto2 es : ".Auto::Add($autoUno,$autoDos)."<br/>";
+
+if($autoUno->Equals($autoUno,$autoDos))
 {
-    echo "El segundo y quinto auto son iguales <br/>";
+    echo "El auto1 y el auto2 son iguales<br/>";
 }
 else
 {
-    echo "El segundo y quinto auto no son iguales <br/>";
+    echo "El auto1 y el auto2 NO son iguales<br/>";
 }
-echo "<br/>";
-echo Auto::MostrarAuto($auto1);
-echo Auto::MostrarAuto($auto3);
-echo Auto::MostrarAuto($auto5);
+
+if($autoUno->Equals($autoUno,$autoCinco))
+{
+    echo "El auto1 y el auto5 son iguales<br/>";
+}
+else
+{
+    echo "El auto1 y el auto5 NO son iguales<br/>";
+}
+echo "Autos: <br/>";
+Auto::MostrarAuto($autoUno);
+echo "-------------------<br/>";
+Auto::MostrarAuto($autoTres);
+echo "-------------------<br/>";
+Auto::MostrarAuto($autoCinco);
+
 
 ?>
