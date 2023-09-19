@@ -13,9 +13,6 @@ $autoCuatro = new Auto("Renault","Violeta",600.00);
 
 $autoCinco = new Auto("Ferrari","Chromo",800.00,"04/05/2023");
 
-$autoTres->AgregarImpuestos(1500);
-$autoCuatro->AgregarImpuestos(1500);
-$autoCinco->AgregarImpuestos(1500);
 $garage = new Garage("El peor",56656.00);
 
 $garage->Add($autoUno);

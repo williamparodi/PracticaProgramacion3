@@ -7,9 +7,9 @@ $clave = $_POST['clave'];
 
 $usuario = new Usuario($mail,$clave);
 
-Usuario::AltaUsuario($path,$usuario);
+//Usuario::AltaUsuario($path,$usuario);
 
-
+Usuario::LogueaUsuario($path,$usuario);
 
 
 ?>

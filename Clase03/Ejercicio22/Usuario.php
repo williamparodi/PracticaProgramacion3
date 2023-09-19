@@ -11,6 +11,7 @@ un :
 “Usuario no registrado si no coincide el mail“
 Hacer los métodos necesarios en la clase usuario*/
 
+
 class Usuario
 {
     private $_clave;
@@ -51,6 +52,53 @@ class Usuario
         }
     }
 
+    public static function VerificaUsuario($arrayUsuarios,$usuario)
+    {
+        $flag = false;
+        if($usuario != NULL && $arrayUsuarios != NULL)
+        {
+            foreach($arrayUsuarios as $u)
+            {
+                if($u->Equals($usuario))
+                {
+                    echo "Verificado</br>";
+                    $flag = true;
+                    break;
+                }
+                else if($usuario->_mail == $u->_mail && $usuario->_clave != $u->_clave)
+                {
+                    echo "Error en los datos <br/>";
+                    $flag = true;
+                    break;
+                }
+                else if($usuario->_mail != $u->_mail && $usuario->_clave == $u->_clave)
+                {
+                    echo "Usuario no registrado <br/>";
+                    $flag = true;
+                    break;
+                }
+            }
+
+            if(!$flag)
+            {
+                echo "Debe registrarse primero<br/>";
+            }
+        }
+    }
+
+    public static function LogueaUsuario($path,$usuario)
+    {
+        $arrayUsuarios = array();
+        if($usuario != NULL)
+        {
+            if(file_exists($path))
+            {
+                $arrayUsuarios = Usuario::LeeUsuarios($path);
+                Usuario::VerificaUsuario($arrayUsuarios,$usuario);
+            }
+        }
+    }
+    
     public static function AltaUsuario($path,$usuario)
     {
         if($usuario != NULL)
@@ -76,7 +124,7 @@ class Usuario
            }
         }
     }
-
+    
     public static function LeeUsuarios($path)
     {
         $arrayUsuarios = null;
@@ -91,8 +139,8 @@ class Usuario
                     $data = fgetcsv($file,filesize($path));
                     if($data != false)
                     {
-                        $clave = $data[0];
-                        $mail = $data[1];
+                        $mail = $data[0];
+                        $clave = $data[1];
                         $usuario = new Usuario($mail,$clave);
                         array_push($arrayUsuarios,$usuario);
                     }
@@ -116,21 +164,9 @@ class Usuario
                     if($u->Equals($usuario))
                     {
                         $retorno = true;
-                        echo "Verificado<b/>";
                         break; 
                     }
-                    else if($u->_mail == $usuario->_mail && $u->_clave != $usuario->_clave)
-                    {
-                        echo "Error en los datos<br/>";
-                        break;
-                    }
-                    else if($u->_clave == $usuario->_clave && $u->_mail != $usuario->_mail)
-                    {
-                        echo "Usuario no registrado";
-                        break;
-                    }
                 }
-                
             }
         }
         
@@ -138,6 +174,5 @@ class Usuario
     }
 
 }
-
 
 ?>

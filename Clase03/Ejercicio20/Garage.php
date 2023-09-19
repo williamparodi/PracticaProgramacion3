@@ -26,6 +26,8 @@ Se deben cargar los datos en un array de garage.
 En testGarage.php, crear autos y un garage. Probar el buen funcionamiento de todos los
 métodos.*/
 
+use Garage as GlobalGarage;
+
 require_once "Auto.php";
 class Garage
 {
@@ -121,10 +123,9 @@ class Garage
 
     public static function GuardarArchivo($path,$garage)
     {
-        $arrayGarage = array($garage->_razonSocial,$garage->_precioPorHora);
-        $arrayAutos = array();
+        $data = array($garage->_razonSocial,$garage->_precioPorHora);
         $file = fopen($path,"a");
-        $linea = fputcsv($file,$arrayGarage);
+        $linea = fputcsv($file,$data);
         fclose($file);
         foreach($garage->_autos as $auto)
         {
@@ -135,19 +136,30 @@ class Garage
     public static function LeerArchivo($path)
     {
         $file = fopen($path, "r");
-        while(!feof($file)) 
+        $arrayGarages = array();
+        $arrayAutos = array();
+        $flag = false;
+        while(!feof($file))
         {
-            $arrayGarage = array();
-            $unGarage = fgetcsv($file,filesize($path));
-            $razonSocial = $unGarage[0];
-            $precioPorHora = $unGarage[1];
-            $garage = new Garage($razonSocial, $precioPorHora);
-            $arrayAutos = Auto::LeerAutos($path);
-            $garage->_autos = $arrayAutos;
+            $data = fgetcsv($file, filesize($path));
+            if(!$flag)
+            {
+                $razonSocial = $data[0];
+                $precioPorHora = $data[1];
+                $flag = true;
+            }
+            else
+            {
+                $arrayAutos = Auto::LeerAutos($path);
+            }
+           
         }
-        array_push($arrayGarage, $garage);
         fclose($file);
-        return $arrayGarage;
+        $garage = new Garage($razonSocial, $precioPorHora);
+        array_push($garage->_autos,$arrayAutos);
+        array_push($arrayGarages, $garage);
+
+        return $arrayGarages;
     }
 
     public static function AltaGarage($garage)
