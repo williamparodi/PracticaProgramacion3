@@ -85,4 +85,14 @@ isset()
 EN post y va por pestaña body y form-data
  enviroments puedo setear variables en el url y asi 
 
+EJEMPLO
+if(isset($_GET["titulo"]))
+{
+    //llamamos a la funcion
+}
+else
+{
+    echo "parametro erroneo";
+}
+
 ?>

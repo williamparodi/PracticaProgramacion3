@@ -24,11 +24,9 @@ $garage->Add($autoCinco);
 echo "-----------<br/>";
 
 Garage::GuardarArchivo($path,$garage);
-$arrayGarage= Garage::LeerArchivo($path);
 echo "-----Datos del Archivo------<br/>";
 
-foreach($arrayGarage as $gar)
-{
-    $gar->MostarGarage();
-}
+Garage::LeerArchivo($path);
+
+
 ?>

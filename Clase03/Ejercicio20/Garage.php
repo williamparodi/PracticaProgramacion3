@@ -136,30 +136,15 @@ class Garage
     public static function LeerArchivo($path)
     {
         $file = fopen($path, "r");
-        $arrayGarages = array();
-        $arrayAutos = array();
-        $flag = false;
         while(!feof($file))
         {
             $data = fgetcsv($file, filesize($path));
-            if(!$flag)
+            foreach($data as $d)
             {
-                $razonSocial = $data[0];
-                $precioPorHora = $data[1];
-                $flag = true;
+                echo $d."<br/>";
             }
-            else
-            {
-                $arrayAutos = Auto::LeerAutos($path);
-            }
-           
         }
         fclose($file);
-        $garage = new Garage($razonSocial, $precioPorHora);
-        array_push($garage->_autos,$arrayAutos);
-        array_push($arrayGarages, $garage);
-
-        return $arrayGarages;
     }
 
     public static function AltaGarage($garage)
