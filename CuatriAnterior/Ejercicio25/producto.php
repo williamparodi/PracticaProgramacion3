@@ -148,6 +148,7 @@ class Producto
         foreach($productos as $producto)
         {
             $productoArray = get_object_vars($producto);//lo pasa a array asociativo con los nombres de las variables
+
             array_push($productosArray,$productoArray);
         }
         $json = json_encode($productosArray,JSON_PRETTY_PRINT);
@@ -189,7 +190,6 @@ class Producto
 
             if(Producto::GuardarJson($array))
             {
-                
                 echo "Ingresado";
             }
             else

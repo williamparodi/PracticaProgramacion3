@@ -13,6 +13,25 @@ Cada usuario se agrega en un renglón diferente al anterior.
 Hacer los métodos necesarios en la clase usuario.*/ 
 
 
+require_once "usuario.php";
 
+if(isset($_POST['nombre']) && isset($_POST['mail']) 
+    && isset($_POST['clave']))
+{
+    $nombre = $_POST['nombre'];
+    $mail = $_POST['mail'];
+    $clave = $_POST['clave'];
+    $usuario = new Usuario($nombre,$clave,$mail);
 
+    Usuario::AltaUsuario($usuario);
+    if(isset($_FILES["archivo"]["name"]))
+    {
+        $nombreImagen = $_FILES["archivo"]["name"];
+        Usuario::SubeImagen($nombreImagen);
+    }
+}
+else
+{
+    echo "Parametros erroneos<br/>";
+}
 ?>
