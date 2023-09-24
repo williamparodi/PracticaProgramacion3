@@ -1,0 +1,50 @@
+[
+    {
+        "_id": 64,
+        "_codigoBarras": "101000",
+        "_cantidadItems": "2",
+        "_idUsuario": "6987"
+    },
+    {
+        "_id": 7909,
+        "_codigoBarras": "101000",
+        "_cantidadItems": "2",
+        "_idUsuario": "6987"
+    },
+    {
+        "_id": 1407,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "2",
+        "_idUsuario": "2953"
+    },
+    {
+        "_id": 526,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "25",
+        "_idUsuario": "3551"
+    },
+    {
+        "_id": 3046,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "25",
+        "_idUsuario": "3551"
+    },
+    {
+        "_id": 7194,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "25",
+        "_idUsuario": "3551"
+    },
+    {
+        "_id": 2943,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "19",
+        "_idUsuario": "3551"
+    },
+    {
+        "_id": 1441,
+        "_codigoBarras": "563000",
+        "_cantidadItems": "19",
+        "_idUsuario": "3551"
+    }
+]

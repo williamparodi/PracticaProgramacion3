@@ -1,0 +1,23 @@
+[
+    {
+        "_id": 6987,
+        "_nombre": "Belatriz",
+        "_clave": "1324bela",
+        "_mail": "bela@yahoo.com.ar",
+        "_fechaDeRegistro": "22-09-23"
+    },
+    {
+        "_id": 3551,
+        "_nombre": "Voldemort",
+        "_clave": "1234muerePotter",
+        "_mail": "voldi20@gmail.com",
+        "_fechaDeRegistro": "22-09-23"
+    },
+    {
+        "_id": 2953,
+        "_nombre": "Pepe",
+        "_clave": "pepe12341",
+        "_mail": "pepe@gmail.com",
+        "_fechaDeRegistro": "22-09-23"
+    }
+]
