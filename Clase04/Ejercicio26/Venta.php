@@ -12,6 +12,7 @@ Retorna un :
 “venta realizada”Se hizo una venta
 “no se pudo hacer“si no se pudo hacer
 Hacer los métodos necesaris en las clases*/
+
 require_once "Usuario.php";
 require_once "Producto.php";
 

@@ -3,6 +3,7 @@
     if( isset( $_COOKIE['prueba']) )
     {
         echo "<p>La cookie está creada</p>";
+        echo $_COOKIE["prueba"];//veo si esta seteada
     }
     else
     {
