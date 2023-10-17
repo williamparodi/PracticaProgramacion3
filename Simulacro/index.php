@@ -35,6 +35,9 @@ else if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 require_once "PizzaCarga.php";
                 PizzaCarga::CargaPizza();
                 break;
+            case 'AltaVenta':
+                require_once "AltaVenta.php";
+                AltaVenta::AltaVenta();
             default:
                 echo json_encode(['error' => 'carga erronea']);
                 break;

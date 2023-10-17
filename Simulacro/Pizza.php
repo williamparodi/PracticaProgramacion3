@@ -116,6 +116,28 @@ class Pizza
         return $retorno;
     }
 
+    public static function RestaStockPizza($pizzasStock,$venta)
+    {
+        $retorno = false;
+        if($venta != NULL && $pizzasStock != NULL)
+        {
+            if(count($pizzasStock) >0)
+            {
+                foreach($pizzasStock as $p)
+                {
+                    if($p->Equals($venta) && $p->_cantidad >= $venta->_cantidad)
+                    {
+                        $nuevoStock = $p->_cantidad - $venta->_cantidad;
+                        $p->_cantidad -=$nuevoStock;
+                        $retorno = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return $retorno;
+    }
+
     public static function AltaPizza($pizza)
     {
         $array = Pizza::LeeJson();
