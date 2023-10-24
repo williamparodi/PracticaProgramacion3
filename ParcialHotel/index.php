@@ -24,6 +24,10 @@ if(isset($_GET['accion']))
                     require_once 'ConsultarCliente.php';
                     ConsultarCliente::ConsultarCliente();
                     break;
+                case 'reservaHabitacion':
+                    require_once 'ReservaHabitacion.php';
+                    ReservaHabitacion::AltaReserva();
+                    break;
                 default:
                     echo json_encode(['error'=>'Parametro "accion" no permitido']);
                     break;

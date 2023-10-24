@@ -25,19 +25,18 @@ class ManejadorArchivos
                     $filteredData[] = $item;
                 }
             }
-    
             return $filteredData;
         } else {
             return [];
         }
     }
 
-    public function guardar($cliente) {
+    public function guardar($data) {
         // Leer el archivo JSON existente
         $existingData = $this->leer();
     
         // Agregar el nuevo cliente al arreglo existente
-        $existingData[] = $cliente;
+        $existingData[] = $data;
     
         // Codificar el arreglo actualizado a formato JSON
         $jsonString = json_encode($existingData);
@@ -55,6 +54,34 @@ class ManejadorArchivos
         $extension = pathinfo($nombre_archivo,PATHINFO_EXTENSION);//obtengo la extension
         $clienteImagen = $cliente->_id . $cliente->_tipoCliente;
         $nuevoNombreImagen = $clienteImagen. "." .$extension;//nuevo nombre
+        $rutaDestino =  $destino . $nuevoNombreImagen;
+        if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg")) && ($tamano_archivo < 2000000)))
+        {
+            echo json_encode(['Error en imagen'=>"La extensión o el tamaño de los archivos no es correcta.Se permiten archivos .png 
+            o .jpg se permiten archivos de 200 Kb máximo."]);
+        }
+        else
+        {
+            if (move_uploaded_file($_FILES['_imagen']['tmp_name'],  $rutaDestino))
+            {
+                echo json_encode(['Exito'=>"La imagen ha sido cargado correctamente."]);
+            }
+            else
+            {
+                echo json_encode(['Error en imagen'=>"Ocurrió algún error al subir el fichero. No pudo guardarse."]);
+            }
+        }
+    }
+
+    public function guardarImagenReserva($destino,$reserva)
+    {
+        $nombre_archivo = $_FILES['_imagen']['name'];
+        $tipo_archivo = $_FILES['_imagen']['type'];
+        $tamano_archivo = $_FILES['_imagen']['size'];
+
+        $extension = pathinfo($nombre_archivo,PATHINFO_EXTENSION);//obtengo la extension
+        $reservaImagen = $reserva->_tipoCliente . $reserva->_nroCliente . $reserva->_id;
+        $nuevoNombreImagen = $reservaImagen. "." .$extension;//nuevo nombre
         $rutaDestino =  $destino . $nuevoNombreImagen;
         if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg")) && ($tamano_archivo < 2000000)))
         {
