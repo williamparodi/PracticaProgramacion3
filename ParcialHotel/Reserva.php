@@ -18,11 +18,10 @@ class Reserva
     public $_fechaSalida;
     public $_tipoHabitacion;
     public $_importeTotal;
-    public static $idAutoincremental = 1;
 
     public function __construct($tipoCliente,$nroCliente,$fechaEntrada,$fechaSalida,$tipoHabitacion,$importeTotal)
     {
-        $this->_id = ++Reserva::$idAutoincremental;
+        $this->_id = rand(1,1000);
         $this->_tipoCliente = $tipoCliente;
         $this->_nroCliente = $nroCliente;
         $this->_fechaEntrada = $fechaEntrada;
@@ -176,9 +175,8 @@ class Reserva
             $fecha = DateTime::createFromFormat('d/m/Y', $fecha);
             if ($fecha) 
             {
-                $fecha = $fecha->format('Y-m-d');
+                $fecha = $fecha->format('d/m/Y');
                 echo "Fecha ingresada: $fecha";
-               
             }
         }
 
@@ -233,20 +231,41 @@ class Reserva
         $manejadorDeArchivos = new ManejadorArchivos($ruta);
         $arrayReservas = $manejadorDeArchivos->leer();
         $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
-        // Filtrar las reservas por fecha en el rango especificado
-        $reservasFiltradas = array_filter($reservas, function($reserva) use ($fecha1, $fecha2) 
+        if($fecha1 != NULL && $fecha2 != NULL)
         {
-            $fechaReserva = DateTime::createFromFormat('d/m/Y', $reserva->_fechaEntrada);
-            return $fechaReserva >= $fecha1 && $fechaReserva <= $fecha2;
-        });
-    
-        // Ordenar las reservas por fecha
-        usort($reservasFiltradas, function($a, $b) 
-        {
-            $fechaA = DateTime::createFromFormat('d/m/Y', $a->_fechaEntrada);
-            $fechaB = DateTime::createFromFormat('d/m/Y', $b->_fechaEntrada);
-            return $fechaA <=> $fechaB;
-        });
+            $fechaEntradaValida = DateTime::createFromFormat('d/m/Y', $fecha1);
+            $fechaSalidaValida = DateTime::createFromFormat('d/m/Y', $fecha2);
+            if($fechaEntradaValida && $fechaSalidaValida)
+            {
+                if($fechaEntradaValida < $fechaSalidaValida)
+                {
+                    $fechaEntradaFormat = $fechaEntradaValida->format('d/m/Y');
+                    $fechaSalidaFormat = $fechaSalidaValida->format('d/m/Y');
+                    $fecha1 = $fechaEntradaFormat;
+                    $fecha2 = $fechaSalidaFormat;
+                    var_dump($fecha1);
+                    var_dump($fecha2);
+                }
+                else
+                {
+                    echo json_encode(['error' => 'La fecha1 nunca puede ser anterior a la fecha2 ']);
+                }
+                // Filtrar las reservas por fecha en el rango especificado
+                $reservasFiltradas = array_filter($reservas, function($reserva) use ($fecha1, $fecha2) 
+                {
+                    $fechaReserva = DateTime::createFromFormat('d/m/Y', $reserva->_fechaEntrada);
+                    return $fechaReserva >= $fecha1 && $fechaReserva <= $fecha2;
+                });
+            
+                // Ordenar las reservas por fecha
+                usort($reservasFiltradas, function($a, $b) 
+                {
+                    $fechaA = $a->_fechaEntrada;
+                    $fechaB = $b->_fechaEntrada;
+                    return $fechaA <=> $fechaB;
+                });
+            }
+        }
     
         return $reservasFiltradas; 
     }
@@ -315,7 +334,6 @@ class Reserva
                     {
                         $fecha = $_GET['fecha'];
                         $importeTotal = Reserva::ConsultaTotalReservas($tipoHabitacion,$fecha);
-                        var_dump($importeTotal);
                         echo json_encode(['Importe Total de la fecha '=>$fecha.' Importe: '. $importeTotal]);
                     }
                 }
@@ -350,6 +368,7 @@ class Reserva
                 {
                     echo json_encode(["error" => "Datos invalidos"]);
                 }
+                break;
             case 'd':
                 if(isset($_GET['tipoHabitacion']))
                 {

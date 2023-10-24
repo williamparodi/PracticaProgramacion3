@@ -11,8 +11,6 @@ class ConsultaReservas
 {
     public static function ConsultaReservas()
     {
-        $consulta = $_GET["consulta"];
-        var_dump($consulta);
         if(isset($_GET["consulta"]))
         {
             $consulta = $_GET["consulta"];
