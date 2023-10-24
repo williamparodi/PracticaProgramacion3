@@ -52,9 +52,12 @@ class ManejadorArchivos
         $tamano_archivo = $_FILES['_imagen']['size'];
 
         $extension = pathinfo($nombre_archivo,PATHINFO_EXTENSION);//obtengo la extension
-        $clienteImagen = $cliente->_id . $cliente->_tipoCliente;
+        $clienteImagen = $cliente->_id ."_". $cliente->_tipoCliente;
         $nuevoNombreImagen = $clienteImagen. "." .$extension;//nuevo nombre
         $rutaDestino =  $destino . $nuevoNombreImagen;
+        var_dump($nombre_archivo);
+        var_dump($tamano_archivo);
+        var_dump($tipo_archivo);
         if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg")) && ($tamano_archivo < 2000000)))
         {
             echo json_encode(['Error en imagen'=>"La extensión o el tamaño de los archivos no es correcta.Se permiten archivos .png 
@@ -75,12 +78,12 @@ class ManejadorArchivos
 
     public function guardarImagenReserva($destino,$reserva)
     {
-        $nombre_archivo = $_FILES['_imagen']['name'];
-        $tipo_archivo = $_FILES['_imagen']['type'];
-        $tamano_archivo = $_FILES['_imagen']['size'];
+        $nombre_archivo = $_FILES['imagen']['name'];
+        $tipo_archivo = $_FILES['imagen']['type'];
+        $tamano_archivo = $_FILES['imagen']['size'];
 
         $extension = pathinfo($nombre_archivo,PATHINFO_EXTENSION);//obtengo la extension
-        $reservaImagen = $reserva->_tipoCliente . $reserva->_nroCliente . $reserva->_id;
+        $reservaImagen = $reserva->_tipoCliente ."_". $reserva->_nroCliente ."_". $reserva->_id;
         $nuevoNombreImagen = $reservaImagen. "." .$extension;//nuevo nombre
         $rutaDestino =  $destino . $nuevoNombreImagen;
         if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg")) && ($tamano_archivo < 2000000)))
@@ -90,7 +93,7 @@ class ManejadorArchivos
         }
         else
         {
-            if (move_uploaded_file($_FILES['_imagen']['tmp_name'],  $rutaDestino))
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'],  $rutaDestino))
             {
                 echo json_encode(['Exito'=>"La imagen ha sido cargado correctamente."]);
             }

@@ -46,6 +46,11 @@ class Cliente
         $this->_id = $id;
     }
 
+    public function GetId()
+    {
+        return $this->_id;
+    }
+
     //-------- Alta Cliente-------------
     public static function InsertaUnCliente($nuevoCliente)
     {
@@ -61,11 +66,11 @@ class Cliente
             {
                 $manejadorDeArchivos->guardar($nuevoCliente);
                 $manejadorDeArchivos->guardarImagen($destinoImagen, $nuevoCliente);
-                echo json_encode(['exito' => 'El cliente se ingresó al sistema']);
+                echo json_encode(['exito' => 'El cliente se ingreso al sistema']);
             }
             else
             {
-                echo json_encode(['error' => 'El cliente ya está en el hotel, elija modificar los datos']);
+                echo json_encode(['error' => 'El cliente ya esta en el hotel, elija modificar los datos']);
             }
         }
     }

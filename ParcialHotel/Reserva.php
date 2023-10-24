@@ -46,34 +46,73 @@ class Reserva
         $this->_id = $id;
     }
     
-    /*estoy aca
-    public function VereficaCliente($reserva)
+    public function Equals($cliente)
     {
-        if()
+        $retorno = false;
+        if($cliente != NULL)
+        {
+            if($this->_nroCliente == $cliente->GetId() && $this->GetTipoCliente() == $cliente->GetTipoCliente())
+            {
+                $retorno = true;
+            }
+        }
+        return $retorno;
     }
-    */
-
 
     public static function InsertaUnaReserva($reserva)
     {
         $rutaHoteles = "json/hoteles.json";
         $ruta = "json/reservas.json";
-        $destinoImagen = "ImagenesDeReservas/2023/";
+        $destinoImagen = "ImagenesDeReservas2023/";
         $manejadorDeArchivosHoteles = new ManejadorArchivos($rutaHoteles);
         $arrayClientes = $manejadorDeArchivosHoteles->leer();
         $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
-        if (Cliente::ClienteExiste($clientes, $reserva)) 
+        if (Reserva::BuscarCliente($clientes, $reserva)) 
         {
             $manejadorDeArchivos =new ManejadorArchivos($ruta);
-            $arrayReservas = $manejadorDeArchivos->leer();
+            //$arrayReservas = $manejadorDeArchivos->leer();
+            //$reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
             $manejadorDeArchivos->guardar($reserva);
             $manejadorDeArchivos->guardarImagenReserva($destinoImagen, $reserva);
-            echo json_encode(['exito' => 'La reserva se ingresó al sistema']);
+            echo json_encode(['exito' => 'La reserva se ingreso al sistema']);
         }
         else
         {
             echo json_encode(['error' => 'No existe ese cliente,no se pudo ingresar la reserva']);
         }
+    }
+
+    public static function ConvertirArrayReservaEnObjetos($arrayReservas)
+    {
+        $reservas = [];
+        foreach ($arrayReservas as $reservaData) 
+        {
+            $reserva = new Reserva(
+                $reservaData["tipoCliente"],
+                $reservaData["nroCliente"],
+                $reservaData["fechaEntrada"],
+                $reservaData["fechaSalida"],
+                $reservaData["tipoHabitacion"],
+                $reservaData["importe"]
+            );
+            $reserva->SetId($reservaData["_id"]);
+            $reservas[] = $reserva;
+        }
+        return $reservas;
+    }
+
+    public static function BuscarCliente($clientes, $nuevaReserva)
+    {
+        $retorno = false;
+        foreach ($clientes as $cl) 
+        {
+            if ($nuevaReserva->Equals($cl)) 
+            {
+                $retorno = true;
+                break;
+            }
+        }
+        return $retorno;
     }
 
 }
