@@ -200,9 +200,25 @@ class Reserva
 
     //-----------------Ajusta----------------------------
 
-    public static function AjustaReserva($idReserva,$motivo)
+    public static function AjustaReserva($idReserva,$motivo,$importeNuevo)
     {
-        
+        $ruta = "json/ajustes.json";
+        $rutaReserva = "json/reservas.json";
+        $manejadorDeArchivos = new ManejadorArchivos($ruta);
+        $manejadorDeArchivosReserva = new ManejadorArchivos($rutaReserva);
+        $arrayReservas = $manejadorDeArchivosReserva->leer();
+        $arrayAjuste = $manejadorDeArchivos->leer();
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
+        foreach($reservas as $reserva)
+        {
+            if($reserva->_id == $idReserva)
+            {
+                $reserva->_importeTotal = $importeNuevo;
+                $arrayAjuste = "Motivo: ".$motivo ."-"."IdReserva: ".$reserva->_id ."-"."importe nuevo: ".$importeNuevo;
+                $manejadorDeArchivosReserva->modifica($reservas);
+                $manejadorDeArchivos->guardar($arrayAjuste); 
+            }
+        }
     }
 
 

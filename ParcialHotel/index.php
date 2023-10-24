@@ -33,6 +33,10 @@ if(isset($_GET['accion']))
                     require_once 'CancelarReserva.php';
                     CancelarReserva::CancelarReserva();
                     break;
+                case 'ajuste':
+                    require_once 'AjusteReserva.php';
+                    AjusteReserva::AjusteReserva();
+                    break;
                 default:
                     echo json_encode(['error'=>'Parametro "accion" no permitido']);
                     break;
