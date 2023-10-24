@@ -1,7 +1,5 @@
 <?php
 
-use Cliente as GlobalCliente;
-
 require_once "ManejadorArchivos.php";
 class Cliente
 {

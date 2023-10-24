@@ -71,8 +71,8 @@ class Reserva
             {
                 if($fechaEntradaValida < $fechaSalidaValida)
                 {
-                    $fechaEntradaFormat = $fechaEntradaValida->format("Y-m-d");
-                    $fechaSalidaFormat = $fechaSalidaValida->format("Y-m-d");
+                    $fechaEntradaFormat = $fechaEntradaValida->format('d/m/Y');
+                    $fechaSalidaFormat = $fechaSalidaValida->format('d/m/Y');
 
                     $this->_fechaEntrada = $fechaEntradaFormat;
                     $this->_fechaSalida = $fechaSalidaFormat;
@@ -105,8 +105,6 @@ class Reserva
             if (Reserva::BuscarCliente($clientes, $reserva)) 
             {
                 $manejadorDeArchivos =new ManejadorArchivos($ruta);
-                //$arrayReservas = $manejadorDeArchivos->leer();
-                //$reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
                 $manejadorDeArchivos->guardar($reserva);
                 $manejadorDeArchivos->guardarImagenReserva($destinoImagen, $reserva);
                 echo json_encode(['exito' => 'La reserva se ingreso al sistema']);
@@ -165,12 +163,10 @@ class Reserva
         $ruta = "json/reservas.json";
         $manejadorDeArchivos = new ManejadorArchivos($ruta);
         $arrayReservas = $manejadorDeArchivos->leer();
-        var_dump($arrayReservas);
         $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
-        var_dump($reservas);
         $reservasTotal = 0;
         $fechaActual = new DateTime();
-
+        
         if($fecha === null)
         {
             $fechaActual->modify('-1 day');
@@ -181,8 +177,8 @@ class Reserva
             if ($fecha) 
             {
                 $fecha = $fecha->format('Y-m-d');
-                echo "Fecha ingresada: ";
-                var_dump($fecha);
+                echo "Fecha ingresada: $fecha";
+               
             }
         }
 
@@ -190,10 +186,16 @@ class Reserva
         {
             if($reserva->_tipoHabitacion == $tipoHabitacion)
             {
-                var_dump($reserva->_fechaEntrada);
-                if($fecha === null || $reserva->_fechaEntrada == $fecha)
+                if($fecha == null) 
                 {
                     $reservasTotal += $reserva->_importeTotal;
+                }
+                else
+                {
+                    if($fecha == $reserva->_fechaEntrada)
+                    {
+                        $reservasTotal += $reserva->_importeTotal; 
+                    }
                 }
             }
         }
@@ -205,22 +207,23 @@ class Reserva
     //b- El listado de reservas para un cliente en particular.
     public static function ConsultaReservasCliente($nroCliente)
     {
-        $arrayReservasCliente = [];
+        $reservasCliente = [];
         if($nroCliente != null && !is_nan($nroCliente))
         {
             $ruta = "json/reservas.json";
             $manejadorDeArchivos = new ManejadorArchivos($ruta);
             $arrayReservas = $manejadorDeArchivos->leer();
-            foreach($arrayReservas as $reserva)
+            $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
+            foreach($reservas as $reserva)
             {
                 if($reserva->_nroCliente == $nroCliente)
                 {
-                    $arrayReservasCliente[] = $reserva;
+                    $reservasCliente[] = $reserva;
                 }
             }
         }
 
-        return $arrayReservasCliente;
+        return $reservasCliente;
     }
 
     //c- El listado de reservas entre dos fechas ordenado por fecha.
@@ -229,9 +232,9 @@ class Reserva
         $ruta = "json/reservas.json";
         $manejadorDeArchivos = new ManejadorArchivos($ruta);
         $arrayReservas = $manejadorDeArchivos->leer();
-        
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
         // Filtrar las reservas por fecha en el rango especificado
-        $reservasFiltradas = array_filter($arrayReservas, function($reserva) use ($fecha1, $fecha2) 
+        $reservasFiltradas = array_filter($reservas, function($reserva) use ($fecha1, $fecha2) 
         {
             $fechaReserva = DateTime::createFromFormat('d/m/Y', $reserva->_fechaEntrada);
             return $fechaReserva >= $fecha1 && $fechaReserva <= $fecha2;
@@ -254,10 +257,11 @@ class Reserva
         $ruta = "json/reservas.json";
         $manejadorDeArchivos = new ManejadorArchivos($ruta);
         $arrayReservas = $manejadorDeArchivos->leer();
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
         if ($tipoHabitacion != NULL) 
         {
             // Filtrar las reservas por tipo de habitación
-            $reservasFiltradas = array_filter($arrayReservas, function($reserva) use ($tipoHabitacion) {
+            $reservasFiltradas = array_filter($reservas, function($reserva) use ($tipoHabitacion) {
                 return $reserva->_tipoHabitacion == $tipoHabitacion;
             });
     
@@ -280,7 +284,7 @@ class Reserva
                 echo "Tipo de Habitación: " . $reserva->_tipoHabitacion . "<br>";
                 echo "Fecha de Entrada: " . $reserva->_fechaEntrada . "<br>";
                 echo "Fecha de Salida: " . $reserva->_fechaSalida . "<br>";
-                echo "Importe Total: $" . $reserva->_importe . "<br>";
+                echo "Importe Total: $" . $reserva->_importeTotal . "<br>";
             }
         } 
         else
@@ -301,14 +305,15 @@ class Reserva
                 if(isset($_GET['tipoHabitacion']))
                 {
                     $tipoHabitacion = $_GET['tipoHabitacion'];
-                    $fecha = $_GET['fecha'];
-                    if($fecha === null)
+                    
+                    if(!isset($_GET['fecha']))
                     {
                         $importeTotal = Reserva::ConsultaTotalReservas($tipoHabitacion,null);
                         echo json_encode(['Total : '=> $importeTotal]);
                     }
                     else
                     {
+                        $fecha = $_GET['fecha'];
                         $importeTotal = Reserva::ConsultaTotalReservas($tipoHabitacion,$fecha);
                         var_dump($importeTotal);
                         echo json_encode(['Importe Total de la fecha '=>$fecha.' Importe: '. $importeTotal]);
