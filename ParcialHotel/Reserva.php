@@ -1,4 +1,5 @@
 <?php
+
 require_once "Cliente.php";
 /*a- ReservaHabitacion.php: (por POST) se recibe el Tipo de Cliente, Nro de Cliente,
 Fecha de Entrada, Fecha de Salida, Tipo de Habitación (Simple, Doble, Suite), y el
@@ -128,12 +129,12 @@ class Reserva
         foreach ($arrayReservas as $reservaData) 
         {
             $reserva = new Reserva(
-                $reservaData["tipoCliente"],
-                $reservaData["nroCliente"],
-                $reservaData["fechaEntrada"],
-                $reservaData["fechaSalida"],
-                $reservaData["tipoHabitacion"],
-                $reservaData["importe"]
+                $reservaData["_tipoCliente"],
+                $reservaData["_nroCliente"],
+                $reservaData["_fechaEntrada"],
+                $reservaData["_fechaSalida"],
+                $reservaData["_tipoHabitacion"],
+                $reservaData["_importeTotal"]
             );
             $reserva->SetId($reservaData["_id"]);
             $reservas[] = $reserva;
@@ -155,7 +156,7 @@ class Reserva
         return $retorno;
     }
     
-    /*Consultas
+    /*-----------------Consultas------------------------------------------
     a- El total de reservas (importe) por tipo de habitación y fecha en un día en particular
     (se envía por parámetro), si no se pasa fecha, se muestran las del día anterior.*/ 
 
@@ -164,6 +165,9 @@ class Reserva
         $ruta = "json/reservas.json";
         $manejadorDeArchivos = new ManejadorArchivos($ruta);
         $arrayReservas = $manejadorDeArchivos->leer();
+        var_dump($arrayReservas);
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
+        var_dump($reservas);
         $reservasTotal = 0;
         $fechaActual = new DateTime();
 
@@ -177,23 +181,27 @@ class Reserva
             if ($fecha) 
             {
                 $fecha = $fecha->format('Y-m-d');
+                echo "Fecha ingresada: ";
+                var_dump($fecha);
             }
         }
 
-        foreach($arrayReservas as $reserva)
+        foreach($reservas as $reserva)
         {
             if($reserva->_tipoHabitacion == $tipoHabitacion)
             {
+                var_dump($reserva->_fechaEntrada);
                 if($fecha === null || $reserva->_fechaEntrada == $fecha)
                 {
-                    $reservasTotal += $reserva->_importe;
+                    $reservasTotal += $reserva->_importeTotal;
                 }
             }
         }
 
         return $reservasTotal;
     }
-     //-----------------------------------------------------------------------
+
+    //-----------------------------------------------------------------------
     //b- El listado de reservas para un cliente en particular.
     public static function ConsultaReservasCliente($nroCliente)
     {
@@ -259,6 +267,99 @@ class Reserva
             });
     
             return $reservasFiltradas;
+        }
+    }
+
+    public static function MostrarReservas($reservas)
+    {
+        if (count($reservas)>0)
+        {
+            foreach ($reservas as $reserva) 
+            {
+                echo "ID de Reserva: " . $reserva->_id . "<br>";
+                echo "Tipo de Habitación: " . $reserva->_tipoHabitacion . "<br>";
+                echo "Fecha de Entrada: " . $reserva->_fechaEntrada . "<br>";
+                echo "Fecha de Salida: " . $reserva->_fechaSalida . "<br>";
+                echo "Importe Total: $" . $reserva->_importe . "<br>";
+            }
+        } 
+        else
+        {
+            echo "No se encontraron reservas.";
+        }
+    }
+
+    //---------- Selector ------------------------
+    public static function SeleccionaConsulta($consulta)
+    {
+        $consulta = strtolower($consulta);
+        switch($consulta)
+        {
+            case 'a':
+                echo json_encode(['Consulta a'=> 'Total de reserva segun fecha : ']);
+                echo "<br/>";
+                if(isset($_GET['tipoHabitacion']))
+                {
+                    $tipoHabitacion = $_GET['tipoHabitacion'];
+                    $fecha = $_GET['fecha'];
+                    if($fecha === null)
+                    {
+                        $importeTotal = Reserva::ConsultaTotalReservas($tipoHabitacion,null);
+                        echo json_encode(['Total : '=> $importeTotal]);
+                    }
+                    else
+                    {
+                        $importeTotal = Reserva::ConsultaTotalReservas($tipoHabitacion,$fecha);
+                        var_dump($importeTotal);
+                        echo json_encode(['Importe Total de la fecha '=>$fecha.' Importe: '. $importeTotal]);
+                    }
+                }
+                else
+                {
+                    echo json_encode(["error" => "Datos invalidos"]);
+                }
+                break;
+            case 'b':
+                if(isset($_GET['idCliente']))
+                {
+                    $idCliente = $_GET['idCliente'];
+                    $arrayReservas = Reserva::ConsultaReservasCliente($idCliente);
+                    echo json_encode(['Consulta b'=> 'El listado de reservas para un cliente en particular : ']);
+                    Reserva::MostrarReservas($arrayReservas);
+                }
+                else
+                {
+                    echo json_encode(["error" => "Datos invalidos"]);
+                }
+                break;
+            case 'c':
+                if(isset($_GET['fecha1']) && isset($_GET['fecha2']))
+                {
+                    $fecha1 = $_GET['fecha1'];
+                    $fecha2 = $_GET['fecha2'];
+                    $arrayFechasFiltradas = Reserva::ConsultaReservasPorFechas($fecha1,$fecha2);
+                    echo json_encode(['Consulta c'=> 'El listado de reservas entre dos fechas ordenado por fecha: ']);
+                    Reserva::MostrarReservas($arrayFechasFiltradas);
+                }
+                else
+                {
+                    echo json_encode(["error" => "Datos invalidos"]);
+                }
+            case 'd':
+                if(isset($_GET['tipoHabitacion']))
+                {
+                    $tipoHabitacion = $_GET['tipoHabitacion'];
+                    $arrayReservasPorTipo = Reserva::ConsultaReservasPorTipo($tipoHabitacion);
+                    Reserva::MostrarReservas($arrayReservasPorTipo);
+                }
+                else
+                {
+                    echo json_encode(["error" => "Datos invalidos"]);
+                }
+                break;
+            default:
+                echo json_encode(["error consulta" => "Consulta invalida"]);
+                break;
         }
     }
 }

@@ -6,8 +6,9 @@ if(isset($_GET['accion']))
         case 'GET':
             switch ($_GET['accion'])
             {
-                case 'sesion':
-                    include 'sesiones.php';
+                case 'consultaReserva':
+                    require_once 'ConsultaReservas.php';
+                    ConsultaReservas::ConsultaReservas();
                     break;
                 default:
                     echo json_encode(['error'=>'Parametro "accion" no permitido']);
@@ -40,6 +41,6 @@ if(isset($_GET['accion']))
 } 
 else 
 {
-    echo 'Parámetro "accion" no enviado';
+    echo 'Parametro "accion" no enviado';
 }
 ?>
