@@ -29,6 +29,21 @@ if(isset($_GET['accion']))
                     require_once 'ReservaHabitacion.php';
                     ReservaHabitacion::AltaReserva();
                     break;
+                case 'cancelaReserva':
+                    require_once 'CancelarReserva.php';
+                    CancelarReserva::CancelarReserva();
+                    break;
+                default:
+                    echo json_encode(['error'=>'Parametro "accion" no permitido']);
+                    break;
+            }
+            break;
+        case 'PUT':
+            switch($_GET['accion']){
+                case 'modificacionCliente':
+                    require_once 'ModificarCliente.php';
+                    ModificarCliente::ModificarCliente();
+                    break;
                 default:
                     echo json_encode(['error'=>'Parametro "accion" no permitido']);
                     break;

@@ -1,5 +1,7 @@
 <?php
 
+use Cliente as GlobalCliente;
+
 require_once "ManejadorArchivos.php";
 class Cliente
 {
@@ -58,7 +60,6 @@ class Cliente
             $destinoImagen = "ImagenesDeClientes/2023/";
             $manejadorDeArchivos = new ManejadorArchivos($ruta);
             $arrayClientes = $manejadorDeArchivos->leer();
-            $flag = false;
             $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
             if (!Cliente::ClienteExiste($clientes, $nuevoCliente)) 
             {
@@ -158,7 +159,6 @@ class Cliente
             }
             else if($cliente->_id == $nroCliente && $cliente->GetTipoCliente() != $tipo)
             {
-                echo "entre";
                 $flag = 2;
                 break;
             }
@@ -193,6 +193,49 @@ class Cliente
         }
 
     }
+    ///---------- Modficación -----------------//
+    public static function ModificaCliente($cliente,$idConsulta)
+    {
+        if(Cliente::ValidaCliente($cliente))
+        {
+            $ruta = "json/hoteles.json";
+            $destinoImagen = "ImagenesDeClientes/2023/";
+            $manejadorDeArchivos = new ManejadorArchivos($ruta);
+            $arrayClientes = $manejadorDeArchivos->leer();
+            $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
+            $flag = false;
+            foreach($clientes as $cl)
+            {
+                if($cl->Consulta($idConsulta,$cliente->GetTipoCliente()))
+                {
+                    $cl->SetId($idConsulta);
+                    $cl->_nombre = $cliente->_nombre;
+                    $cl->_apellido = $cliente->_apellido;
+                    $cl->_tipoDoc = $cliente->_tipoDoc;
+                    $cl->_nroDoc = $cliente->_nroDoc;
+                    $cl->_email = $cliente->_email;
+                    $cl->_tipoCliente = $cliente->_tipoCliente;
+                    $cl->_pais = $cliente->_pais;
+                    $cl->_cuidad = $cliente->_ciudad;
+                    $cl->_telefono = $cliente->_telefono;
+                    $manejadorDeArchivos->guardar($cl);
+                    $flag = true;
+                    break;
+                }
+            }
+
+            if($flag)
+            {
+                echo json_encode(['exito'=> 'Modificacion exitosa']);
+            }
+            else
+            {
+                echo json_encode(['error'=> 'No se encuentra el cliente']);
+            }
+        
+        }
+    } 
+
 
     //------------Validaciones-----------------//
     public static function ValidaTipoCliente($tipo)

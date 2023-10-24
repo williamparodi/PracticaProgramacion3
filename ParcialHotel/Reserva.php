@@ -18,8 +18,9 @@ class Reserva
     public $_fechaSalida;
     public $_tipoHabitacion;
     public $_importeTotal;
+    public $_estado;
 
-    public function __construct($tipoCliente,$nroCliente,$fechaEntrada,$fechaSalida,$tipoHabitacion,$importeTotal)
+    public function __construct($tipoCliente,$nroCliente,$fechaEntrada,$fechaSalida,$tipoHabitacion,$importeTotal,$estado="Sin Estado")
     {
         $this->_id = rand(1,1000);
         $this->_tipoCliente = $tipoCliente;
@@ -28,6 +29,10 @@ class Reserva
         $this->_fechaSalida = $fechaSalida;
         $this->_tipoHabitacion = $tipoHabitacion;
         $this->_importeTotal = $importeTotal;
+        if($estado != "Sin Estado")
+        {
+            $this->_estado = $estado;
+        }
     }
     
     //---getter y setters----
@@ -153,6 +158,54 @@ class Reserva
         return $retorno;
     }
     
+    //------Cancela------------------//
+    public static function CancelaUnaReserva($tipoCliente,$nroCliente,$idReserva)
+    {
+        $rutaHoteles = "json/hoteles.json";
+        $ruta = "json/reservas.json";
+        $manejadorDeArchivosHoteles = new ManejadorArchivos($rutaHoteles);
+        $arrayClientes = $manejadorDeArchivosHoteles->leer();
+        $manejadorDeArchivos =new ManejadorArchivos($ruta);
+        $arrayReservas = $manejadorDeArchivos->leer();
+        $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
+        $flag = false;
+        foreach($clientes as $cl)
+        {
+            if ($cl->Consulta($tipoCliente,$nroCliente)) 
+            {
+                $flag = true;
+                break;
+            }
+            
+        }
+        if($flag)
+        {
+            foreach($reservas as $reserva)
+            {
+                if($idReserva == $reserva->_id)
+                {
+                    $reserva->_estado = "Cancelada";
+                    $manejadorDeArchivos->modifica($reservas);
+                    echo json_encode(["cancelacion reserva" => 'se cancelo la reserva']);
+                }
+            }
+        }
+        else
+        {
+            echo json_encode(["error cliente" => 'no existe cliente']);
+        }
+        
+    }
+
+    //-----------------Ajusta----------------------------
+
+    public static function AjustaReserva($idReserva,$motivo)
+    {
+        
+    }
+
+
     /*-----------------Consultas------------------------------------------
     a- El total de reservas (importe) por tipo de habitación y fecha en un día en particular
     (se envía por parámetro), si no se pasa fecha, se muestran las del día anterior.*/ 

@@ -6,24 +6,27 @@
     "_fechaEntrada": "02/03/2023",
     "_fechaSalida": "06/04/2024",
     "_tipoHabitacion": "simple",
-    "_importeTotal": "5000"
+    "_importeTotal": "5000",
+    "_estado": "Cancelada"
   },
   {
-    "_id": 2,
+    "_id": 3,
     "_tipoCliente": "corporativo",
     "_nroCliente": "939891",
     "_fechaEntrada": "15/10/2023",
     "_fechaSalida": "01/04/2024",
     "_tipoHabitacion": "doble",
-    "_importeTotal": "100000"
+    "_importeTotal": "100000",
+    "_estado": null
   },
   {
-    "_id": 2,
+    "_id": 4,
     "_tipoCliente": "corporativo",
     "_nroCliente": "104465",
     "_fechaEntrada": "22/12/2023",
     "_fechaSalida": "22/04/2024",
     "_tipoHabitacion": "simple",
-    "_importeTotal": "80000"
+    "_importeTotal": "80000",
+    "_estado": null
   }
 ]

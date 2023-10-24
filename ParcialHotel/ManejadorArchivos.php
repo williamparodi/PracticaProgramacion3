@@ -45,6 +45,13 @@ class ManejadorArchivos
         file_put_contents($this->urlArchivo, $jsonString);
     }
 
+    public function modifica($data) {
+        // Codificar el arreglo a formato JSON
+        $jsonString = json_encode($data);
+        
+        // Guardar el contenido actualizado en el archivo JSON, sobrescribiendo el archivo existente
+        file_put_contents($this->urlArchivo, $jsonString);
+    }
     public function guardarImagen($destino,$cliente)
     {
         $nombre_archivo = $_FILES['_imagen']['name'];
