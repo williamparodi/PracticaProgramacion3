@@ -9,7 +9,7 @@ class AjusteReserva
 {
     public static function AjusteReserva()
     {
-        if(isset($_POST['importe']) && isset($_POST['idReserva']) && isset($_POST['inflacion']))
+        if(isset($_POST['importe']) && isset($_POST['idReserva']) && isset($_POST['motivo']))
         {
             $importe = $_POST['importe'];
             $idReserva = $_POST['idReserva'];

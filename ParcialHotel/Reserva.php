@@ -29,10 +29,8 @@ class Reserva
         $this->_fechaSalida = $fechaSalida;
         $this->_tipoHabitacion = $tipoHabitacion;
         $this->_importeTotal = $importeTotal;
-        if($estado != "Sin Estado")
-        {
-            $this->_estado = $estado;
-        }
+        $this->_estado = $estado;
+        
     }
     
     //---getter y setters----
@@ -56,7 +54,7 @@ class Reserva
         $retorno = false;
         if($cliente != NULL)
         {
-            if($this->_nroCliente == $cliente->GetId() && $this->GetTipoCliente() == $cliente->GetTipoCliente())
+            if($this->_nroCliente == $cliente->GetId() && $this->_tipoCliente == $cliente->_tipoCliente)
             {
                 $retorno = true;
             }
@@ -214,9 +212,17 @@ class Reserva
             if($reserva->_id == $idReserva)
             {
                 $reserva->_importeTotal = $importeNuevo;
-                $arrayAjuste = "Motivo: ".$motivo ."-"."IdReserva: ".$reserva->_id ."-"."importe nuevo: ".$importeNuevo;
+                $arrayAjuste = [
+                    "Motivo" => $motivo,
+                    "IdReserva" => $reserva->_id,
+                    "importe nuevo" => $importeNuevo
+                ];
                 $manejadorDeArchivosReserva->modifica($reservas);
                 $manejadorDeArchivos->guardar($arrayAjuste); 
+            }
+            else
+            {
+                echo json_encode(['error' => 'no existe esaa reserva']);
             }
         }
     }
@@ -224,8 +230,11 @@ class Reserva
 
     /*-----------------Consultas------------------------------------------
     a- El total de reservas (importe) por tipo de habitación y fecha en un día en particular
-    (se envía por parámetro), si no se pasa fecha, se muestran las del día anterior.*/ 
-
+    (se envía por parámetro), si no se pasa fecha, se muestran las del día anterior.*/
+    /*agregado 
+    a- El total cancelado (importe) por tipo de cliente y fecha en un día en particular (se
+    envía por parámetro), si no se pasa fecha, se muestran las del día anterior.*/
+    
     public static function ConsultaTotalReservas($tipoHabitacion,$fecha)
     {
         $ruta = "json/reservas.json";
@@ -269,6 +278,51 @@ class Reserva
 
         return $reservasTotal;
     }
+
+    public static function CalculaTotalCancelado($tipoCliente,$fecha)
+    {
+        $ruta = "json/reservas.json";
+        $manejadorDeArchivos = new ManejadorArchivos($ruta);
+        $arrayReservas = $manejadorDeArchivos->leer();
+        $reservas = Reserva::ConvertirArrayReservaEnObjetos($arrayReservas);
+        $reservasCancelas = 0;
+        $fechaActual = new DateTime();
+        
+        if($fecha === null)
+        {
+            $fechaActual->modify('-1 day');
+        }
+        else
+        {
+            $fecha = DateTime::createFromFormat('d/m/Y', $fecha);
+            if ($fecha) 
+            {
+                $fecha = $fecha->format('d/m/Y');
+                echo "Fecha ingresada: $fecha";
+            }
+        }
+
+        foreach($reservas as $reserva)
+        {
+            if($reserva->_tipoCliente == $tipoCliente)
+            {
+                if($fecha == null) 
+                {
+                    $reservasCancelas += $reserva->_importeTotal;
+                }
+                else
+                {
+                    if($fecha == $reserva->_fechaEntrada)
+                    {
+                        $reservasCancelas += $reserva->_importeTotal; 
+                    }
+                }
+            }
+        }
+
+        return $reservasCancelas;
+    }
+    
 
     //-----------------------------------------------------------------------
     //b- El listado de reservas para un cliente en particular.
@@ -455,6 +509,20 @@ class Reserva
                 break;
         }
     }
+
+
+    /*Consultas modi Parcial 
+    10- ConsultaReservas.php: (por GET)
+    A la consulta de reservas ya existente, incorporar:
+    a- El total cancelado (importe) por tipo de cliente y fecha en un día en particular (se
+    envía por parámetro), si no se pasa fecha, se muestran las del día anterior.
+    b- El listado de cancelaciones para un cliente en particular.
+    c- El listado de cancelaciones entre dos fechas ordenado por fecha.
+    d- El listado de cancelaciones por tipo de cliente.
+    e- El listado de todas las operaciones (reservas y cancelaciones) por usuario.
+    f- El listado de Reservas por tipo de modalidad.*/ 
+
+
 }
 
 ?>

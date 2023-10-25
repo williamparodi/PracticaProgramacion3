@@ -24,7 +24,7 @@ class Cliente
         $this->_tipoDocumento =$tipoDoc;
         $this->_nroDocumento = $nroDocumento;
         $this->_email = $email;
-        $this->_tipoCliente = $tipoCliente;
+        $this->_tipoCliente = $tipoCliente."-".$tipoDoc;
         $this->_pais = $pais;
         $this->_ciudad = $ciudad;
         $this->_telefono = $telefono;
@@ -133,9 +133,10 @@ class Cliente
         $retorno = false;
         if($tipo != NULL && $nroCliente != NULL)
         {
-            if($this->_id == $nroCliente  && $this->GetTipoCliente() == $tipo)
+            if($this->_id == $nroCliente  && $this->_tipoCliente == $tipo)
             {
                 $retorno = true;
+               
             }
         }
         return $retorno;
@@ -157,7 +158,7 @@ class Cliente
                 $flag = 1;
                 break;
             }
-            else if($cliente->_id == $nroCliente && $cliente->GetTipoCliente() != $tipo)
+            else if($cliente->_id == $nroCliente && $cliente->_tipoCliente != $tipo)
             {
                 $flag = 2;
                 break;
@@ -199,7 +200,6 @@ class Cliente
         if(Cliente::ValidaCliente($cliente))
         {
             $ruta = "json/hoteles.json";
-            $destinoImagen = "ImagenesDeClientes/2023/";
             $manejadorDeArchivos = new ManejadorArchivos($ruta);
             $arrayClientes = $manejadorDeArchivos->leer();
             $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
@@ -235,13 +235,35 @@ class Cliente
         
         }
     } 
-
+     ///--------borrar ----------------
+        /*9- BorrarCliente.php (por DELETE), debe recibir un número el tipo y número de cliente
+        y debe realizar la baja de la cuenta (soft-delete, no físicamente) y la foto relacionada a
+        ese cliente debe moverse a la carpeta /ImagenesBackupClientes/2023.
+        */
+    public static function BorrarCliente($nroCliente,$tipoCliente,$nroDni)
+    {
+        $ruta = "json/hoteles.json";
+        $manejadorDeArchivos = new ManejadorArchivos($ruta);
+        $arrayClientes = $manejadorDeArchivos->leer();
+        $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
+        foreach($clientes as $cl)
+        {
+            if($cl->Consulta($tipoCliente,$nroCliente) && $nroDni == $cl->_nroDocumento)
+            {
+                $cl->_email = "---------";
+                $cl->_nombre = "--------";
+                $cl->_apellido = "-------";
+                $manejadorDeArchivos->modifica($clientes);
+            }
+        }
+        
+    }
 
     //------------Validaciones-----------------//
     public static function ValidaTipoCliente($tipo)
     {
         $retorno = false;
-        if($tipo != NULL && $tipo === 'individual' || $tipo === 'corporativo')
+        if($tipo != NULL && $tipo === 'INDI' || $tipo === 'CORPO')
         {
             $retorno = true;
         }
@@ -255,7 +277,7 @@ class Cliente
     public static function ValidaDni($tipoDoc)
     {
         $retorno = false; 
-        if($tipoDoc != NULL && $tipoDoc === 'dni'|| $tipoDoc ==='lc' || $tipoDoc === 'ci')
+        if($tipoDoc != NULL && $tipoDoc === 'DNI'|| $tipoDoc ==='LE' || $tipoDoc === 'PASAPORTE')
         {
             $retorno = true;
         }
@@ -263,6 +285,30 @@ class Cliente
         {
             echo json_encode(["error" => 'tipos de documento: dni - lc - ci']);
         }
+        return $retorno;
+    }
+
+    public static function validaNumeroDni($nroDocumento)
+    {
+        $retorno = false;
+
+        $ruta = "json/hoteles.json";
+        $manejadorDeArchivos = new ManejadorArchivos($ruta);
+        $arrayClientes = $manejadorDeArchivos->leer();
+        $clientes = Cliente::ConvertirArrayEnObjetos($arrayClientes);
+        foreach ($clientes as $cl) 
+        {
+            if ($cl->_nroDocumento === $nroDocumento) 
+            {
+                $retorno = true;
+                break;
+            }
+        }
+        if($retorno)
+        {
+            echo json_encode(['dni'=>'dni repetido']);
+        }
+
         return $retorno;
     }
 
@@ -275,7 +321,9 @@ class Cliente
             {
                 if(!is_nan($cliente->_telefono))
                 {
-                    if(Cliente::ValidaDni($cliente->_tipoDocumento) && Cliente::ValidaTipoCliente($cliente->_tipoCliente))
+                    if(Cliente::ValidaDni($cliente->_tipoDocumento) //&& 
+                    //Cliente::ValidaTipoCliente($cliente->_tipoCliente) 
+                    && !Cliente::validaNumeroDni($cliente->_nroDocumento))
                     {
                         $retorno = true;
                     }
@@ -294,6 +342,18 @@ class Cliente
     }
 
     
+    /*Agregados 
+    8- ClienteAlta.php:
+    a- La validación del Cliente existente deberá hacerse considerando los atributos:
+    número de cliente y DNI que deben ser únicos en el sistema.
+    b- Se debe adecuar la lógica desarrollada para permitir el ingreso por parámetro
+    opcional de Modalidad de Pago, que permita definir un modalidad de pago
+    inicial como Efectivo.
+    c- Se identificó una mejora funcional por la que el atributo “tipo de cliente”
+    contendrá el Tipo Cliente siendo INDI para Individual, CORPO para Corporativo
+    y el tipo Documento DNI, LE, LC, PASAPORTE.
+    Ejemplo: INDI-DNI ó CORPO-PASAPORTE*/
+
 
 
 }

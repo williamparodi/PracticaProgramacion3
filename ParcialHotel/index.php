@@ -53,6 +53,17 @@ if(isset($_GET['accion']))
                     break;
             }
             break;
+        case 'DELETE':
+            switch($_GET['accion']){
+                case 'borrarCliente':
+                require_once 'BorrarCliente.php';
+                BorrarCliente::BorrarCliente();
+                break;
+                default:
+                    echo json_encode(['error'=>'Parametro "accion" no permitido']);
+                    break;
+            }
+            break;
         default:
             echo json_encode(['error'=>'Verbo no permitido']);
             break;

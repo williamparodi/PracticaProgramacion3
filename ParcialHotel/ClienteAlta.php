@@ -27,6 +27,8 @@ class ClienteAlta
             echo json_encode(["error alta" => "Datos invalidos"]);
         }
     }
+
+    
 }
 
 ?>
