@@ -16,6 +16,7 @@ if(isset($_GET['accion']))
             }
             break;
         case 'POST':
+            $postData = json_decode(file_get_contents("php://input"), true);
             switch ($_GET['accion']){
                 case 'altaCliente':
                     require_once 'ClienteAlta.php';
@@ -46,7 +47,7 @@ if(isset($_GET['accion']))
             switch($_GET['accion']){
                 case 'modificacionCliente':
                     require_once 'ModificarCliente.php';
-                    ModificarCliente::ModificarCliente();
+                    ModificarCliente::ModificarCliente($postData);
                     break;
                 default:
                     echo json_encode(['error'=>'Parametro "accion" no permitido']);

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./estilos/estilos.css">
+    <script src="./js/scrips.js" type="module"></script>
+    <title>Parcial Profesional/Futbolistas</title>
+</head>
+<body>
+    <div id="spinner" class="spinner">
+        <div class="spinner-content">
+          <p>Cargando Datos...</p>
+          <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+        </div>
+      </div>
+    <header>
+        <h1>Formulario Lista</h1>
+    </header>
+        <form>
+            <div id="formDatos">
+                <fieldset id="recuadro">       
+                    <p>Form Datos:</p>
+                    <section class="seccion-tabla">
+                        <div id="tabla"></div>
+                        <div id="botonesDatos">
+                            <input id="agregar" type="submit" value="Agregar Elemento">
+                        </div>
+                    </section>
+                </fieldset>
+            </div>
+        </form>
+    <form>
+        <div id="formAbm">
+            <fieldset id="recuadroABM">
+                <p>Formulario ABM</p>
+                <label>Id:</label>
+                <input id="textId" type="text" name="txtId">
+                <label>Nombre:</label>
+                <input id="txtNombre" type="text" name="txtNombre">
+                <label>Apellido:</label>
+                <input id="txtApellido" type="text" name="txtApellido">
+                <label>Edad:</label>
+                <input id="txtEdad" type="text" name="txtEdad">
+                <select id="dropAbm">
+                    <optgroup label="Tipo"></optgroup>
+                        <option value="Futbolista">Futbolista </option>
+                        <option value="Profesional">Profesional</option>
+                    </optgroup>
+                </select>
+                <label>Equipo:</label>
+                <input id="txtEquipo" type="text" name="txtEquipo">
+                <label>Posicion:</label>
+                <input id="txtPosicion" type="text" name="txtPosicion">
+                <label>CantidadGoles:</label>
+                <input id="txtCantidadGoles" type="text" name="txtCantidadGoles">
+                <label>Titulo:</label>
+                <input id="txtTitulo" type="text" name="txtTitulo">
+                <label>Facultad:</label>
+                <input id="txtFacultad" type="text" name="txtFacultad">
+                <label>AñoGraduacion:</label>
+                <input id="txtAñoGraduacion" type="text" name="txtAñoGraduacion">
+                <div id="tablaAbm">
+                    <input id="aceptarAbm" type="submit" value="Aceptar">
+                    <input id="cancelarAbm" type="submit" value="Cancelar">
+                    <input id="eliminarAbm" type="submit" value="Eliminar">
+                </div>
+            </fieldset>
+        </div>
+    </form>   
+</body>
+</html>

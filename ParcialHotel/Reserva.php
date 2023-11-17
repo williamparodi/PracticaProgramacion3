@@ -134,7 +134,8 @@ class Reserva
                 $reservaData["_fechaEntrada"],
                 $reservaData["_fechaSalida"],
                 $reservaData["_tipoHabitacion"],
-                $reservaData["_importeTotal"]
+                $reservaData["_importeTotal"],
+                $reservaData["_estado"]
             );
             $reserva->SetId($reservaData["_id"]);
             $reservas[] = $reserva;

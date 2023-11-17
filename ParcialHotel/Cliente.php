@@ -24,7 +24,7 @@ class Cliente
         $this->_tipoDocumento =$tipoDoc;
         $this->_nroDocumento = $nroDocumento;
         $this->_email = $email;
-        $this->_tipoCliente = $tipoCliente."-".$tipoDoc;
+        $this->_tipoCliente = $tipoCliente;
         $this->_pais = $pais;
         $this->_ciudad = $ciudad;
         $this->_telefono = $telefono;
@@ -136,7 +136,6 @@ class Cliente
             if($this->_id == $nroCliente  && $this->_tipoCliente == $tipo)
             {
                 $retorno = true;
-               
             }
         }
         return $retorno;
@@ -206,19 +205,19 @@ class Cliente
             $flag = false;
             foreach($clientes as $cl)
             {
-                if($cl->Consulta($idConsulta,$cliente->GetTipoCliente()))
+                if($cl->Consulta($cliente->GetTipoCliente(),$idConsulta))
                 {
                     $cl->SetId($idConsulta);
                     $cl->_nombre = $cliente->_nombre;
                     $cl->_apellido = $cliente->_apellido;
-                    $cl->_tipoDoc = $cliente->_tipoDoc;
-                    $cl->_nroDoc = $cliente->_nroDoc;
+                    $cl->_tipoDocumento = $cliente->_tipoDocumento;
+                    $cl->_nroDocumento = $cliente->_nroDocumento;
                     $cl->_email = $cliente->_email;
                     $cl->_tipoCliente = $cliente->_tipoCliente;
                     $cl->_pais = $cliente->_pais;
                     $cl->_cuidad = $cliente->_ciudad;
                     $cl->_telefono = $cliente->_telefono;
-                    $manejadorDeArchivos->guardar($cl);
+                    $manejadorDeArchivos->modifica($cl);
                     $flag = true;
                     break;
                 }

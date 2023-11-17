@@ -62,9 +62,7 @@ class ManejadorArchivos
         $clienteImagen = $cliente->_id ."_". $cliente->_tipoCliente;
         $nuevoNombreImagen = $clienteImagen. "." .$extension;//nuevo nombre
         $rutaDestino =  $destino . $nuevoNombreImagen;
-        var_dump($nombre_archivo);
-        var_dump($tamano_archivo);
-        var_dump($tipo_archivo);
+
         if (!((strpos($tipo_archivo, "png") || strpos($tipo_archivo, "jpeg")) && ($tamano_archivo < 2000000)))
         {
             echo json_encode(['Error en imagen'=>"La extensión o el tamaño de los archivos no es correcta.Se permiten archivos .png 
@@ -109,6 +107,12 @@ class ManejadorArchivos
                 echo json_encode(['Error en imagen'=>"Ocurrió algún error al subir el fichero. No pudo guardarse."]);
             }
         }
+    }
+
+    // Mover la imagen del cliente borrado a la nueva carpeta de clientes borrados.
+    public function moverImagen($destino,$cliente)
+    {
+        
     }
 }
 ?>
