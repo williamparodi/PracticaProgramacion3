@@ -46,13 +46,13 @@ th,td
 /* Mostrar la celda */
 .table-cell 
 {
-    display: table-cell;  
+  display: table-cell;  
 }
   
   /* Ocultar la celda */
 .none 
 {
-    display: none;
+  display: none;
 }
 
 #formAbm
@@ -126,10 +126,10 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro transparente */
-    display: none; /* Por defecto oculto */
-    z-index: 9999; /* Asegura que esté encima de otros elementos */
-  }
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 9999;
+}
   
   .spinner-content {
     position: absolute;
@@ -158,6 +158,7 @@ body {
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   }
+
   @keyframes lds-ring {
     0% {
       transform: rotate(0deg);
